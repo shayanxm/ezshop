@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".itemDetail.ItemDetailActivity">
+    tools:context=".itemDetail.ItemDetailActivity"
+    android:id="@+id/item_detail_continer">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

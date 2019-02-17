@@ -8,9 +8,8 @@
     tools:context=".Home.CategoryFragment"
     android:orientation="vertical">
 
- <TextView
+ <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/category_rec"
      android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:text="category"
-     android:textSize="23dp"/>
+     android:layout_height="match_parent" />
 </LinearLayout>

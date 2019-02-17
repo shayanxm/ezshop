@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
 
+    android:layout_height="150dp"
     android:gravity="center"
-    android:orientation="vertical"
 
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="#9944fa"
-    android:layout_height="100dp">
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:src="@android:drawable/sym_def_app_icon" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="ez shop"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/facebook_cover_photo_1" />
 
 </LinearLayout>

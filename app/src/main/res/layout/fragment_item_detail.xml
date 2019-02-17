@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    tools:context=".itemDetail.ItemDetailActivity"
+    tools:context=".itemDetail.ItemDetailFragment"
     android:orientation="vertical">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -86,12 +86,8 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@drawable/defulat" />
-
             <TextView
+                android:id="@+id/item_detail_titile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -99,8 +95,14 @@
                 android:text="کاپشن زنانه"
                 android:textColor="@android:color/background_dark" />
 
+            <ImageView
+                android:id="@+id/detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@drawable/defulat" />
+
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/item_detail_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"

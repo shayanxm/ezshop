@@ -1,6 +1,7 @@
 package com.example.shayanmoradi.ezshop.Home;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 import com.squareup.picasso.Picasso;
@@ -30,13 +33,16 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class UnderHomeFragment extends Fragment {
-   private RecyclerView recyclerView;
+    private RecyclerView newestRec;
     private CustomerAdapter customerAdapter;
-
+    private RecyclerView topSalesRec;
+    private CustomerAdapter newestAdapter;
+    private RecyclerView topRatedsRec;
+    private CustomerAdapter topRatedtAdapter;
     public static UnderHomeFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         UnderHomeFragment fragment = new UnderHomeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,16 +57,24 @@ public class UnderHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_under_home, container, false);
-        recyclerView = view.findViewById(R.id.news_rec);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
+        View view = inflater.inflate(R.layout.fragment_under_home, container, false);
+        newestRec = view.findViewById(R.id.news_rec);
+        topSalesRec = view.findViewById(R.id.top_sales_rec);
+        topRatedsRec = view.findViewById(R.id.top_rated_rec);
+        topRatedsRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
+        topSalesRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
+        newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
+
+
+
+
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getNewest().enqueue(new Callback<List<Product>>() {
+                .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> productList = response.body();
                 customerAdapter = new CustomerAdapter(productList);
-                recyclerView.setAdapter(customerAdapter);
+                newestRec.setAdapter(customerAdapter);
             }
 
             @Override
@@ -68,7 +82,37 @@ public class UnderHomeFragment extends Fragment {
 
             }
         });
-   return view;
+
+
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        List<Product> productList = response.body();
+                        newestAdapter = new CustomerAdapter(productList);
+                        topSalesRec.setAdapter(newestAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                    }
+                });
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> productList = response.body();
+                topRatedtAdapter = new CustomerAdapter(productList);
+                topRatedsRec.setAdapter(topRatedtAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+        return view;
     }
 
     private class CustoemrHolder extends RecyclerView.ViewHolder {
@@ -92,7 +136,9 @@ public class UnderHomeFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Toast.makeText(getActivity(), "this is " + product.getmId(), Toast.LENGTH_SHORT).show();
+                    Intent intent = ItemDetailActivity.newIntent(getActivity(), product.getmId());
+                    startActivity(intent);
 
                 }
             });
