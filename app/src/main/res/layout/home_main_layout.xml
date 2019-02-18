@@ -27,7 +27,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/list" />
+                    android:background="@drawable/list_menu" />
 
                 <TextView
                     android:id="@+id/title_text"
@@ -50,15 +50,15 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginLeft="38dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/list" />
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/magnifying_glass" />
 
                 <ImageButton
                     android:id="@+id/imageButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/list" />
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shopping_cart" />
 
             </FrameLayout>
 
