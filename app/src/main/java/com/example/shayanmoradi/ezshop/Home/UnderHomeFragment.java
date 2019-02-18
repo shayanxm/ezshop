@@ -1,7 +1,10 @@
 package com.example.shayanmoradi.ezshop.Home;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
@@ -39,6 +43,8 @@ public class UnderHomeFragment extends Fragment {
     private CustomerAdapter newestAdapter;
     private RecyclerView topRatedsRec;
     private CustomerAdapter topRatedtAdapter;
+    LottieAnimationView lottieAnimationView;
+
     public static UnderHomeFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -57,17 +63,31 @@ public class UnderHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
+
+
+
+
+
         View view = inflater.inflate(R.layout.fragment_under_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
+        lottieAnimationView=view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
         topRatedsRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         topSalesRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
+        LinearLayout linearLayout = view.findViewById(R.id.lottie_continer);
+        // Add ImageView to LinearLayout
 
 
+        if (!isOnline()) {
+            Toast.makeText(getContext(), "disconect", Toast.LENGTH_SHORT).show();
+//        } e
 
-
+        }
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
             @Override
@@ -86,25 +106,11 @@ public class UnderHomeFragment extends Fragment {
 
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                        List<Product> productList = response.body();
-                        newestAdapter = new CustomerAdapter(productList);
-                        topSalesRec.setAdapter(newestAdapter);
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
-
-                    }
-                });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> productList = response.body();
-                topRatedtAdapter = new CustomerAdapter(productList);
-                topRatedsRec.setAdapter(topRatedtAdapter);
+                newestAdapter = new CustomerAdapter(productList);
+                topSalesRec.setAdapter(newestAdapter);
             }
 
             @Override
@@ -112,6 +118,23 @@ public class UnderHomeFragment extends Fragment {
 
             }
         });
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> productList = response.body();
+                topRatedtAdapter = new CustomerAdapter(productList);
+                topRatedsRec.setAdapter(topRatedtAdapter);
+                lottieAnimationView.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+
         return view;
     }
 
@@ -194,5 +217,14 @@ public class UnderHomeFragment extends Fragment {
             return mProduct.size();
         }
     }
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
 }

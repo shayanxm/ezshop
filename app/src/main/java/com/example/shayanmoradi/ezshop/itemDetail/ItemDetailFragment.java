@@ -13,7 +13,6 @@ import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,6 +21,9 @@ import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ss.com.bannerslider.Slider;
+import ss.com.bannerslider.adapters.SliderAdapter;
+import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 
 
 /**
@@ -33,6 +35,9 @@ public class ItemDetailFragment extends Fragment {
     private TextView productName;
     private TextView productPrice;
     private ImageView productImage;
+    Slider slider;
+    int photoCounter;
+    private TextView productSlug;
 
     public static ItemDetailFragment newInstance(int id) {
 
@@ -52,7 +57,8 @@ public class ItemDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         final List<Product> products = null;
 
-        int productId = getArguments().getInt(PRODUCT_ID);
+
+        final int productId = getArguments().getInt(PRODUCT_ID);
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getProductById(productId).enqueue(new Callback<Product>() {
             @Override
@@ -60,9 +66,14 @@ public class ItemDetailFragment extends Fragment {
                 product = response.body();
                 Toast.makeText(getContext(), "t" + product.getmName(), Toast.LENGTH_SHORT).show();
                 productName.setText(product.getmName());
-
-                if (product.getImages() != null && product.getImages().size() > 0)
-                    Picasso.get().load(product.getImages().get(0).getPath()).into(productImage);
+             productSlug.setText(product.getEnlgishName(product));
+//
+//                if (product.getImages() != null && product.getImages().size() > 0)
+//                    Picasso.get().load(product.getImages().get(0).getPath()).into(productImage);
+                photoCounter = product.getImages().size();
+                MainSliderAdapter mainSliderAdapter = new MainSliderAdapter();
+                mainSliderAdapter.setItemCount(photoCounter);
+                slider.setAdapter(mainSliderAdapter);
             }
 
             @Override
@@ -81,13 +92,66 @@ public class ItemDetailFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
-    productName=view.findViewById(R.id.item_detail_titile);
+        productName = view.findViewById(R.id.item_detail_titile);
+productSlug= view.findViewById(R.id.item_detail_slug);
         //productPrice=view.findViewById(R.id.item_price);
-        productImage=view.findViewById(R.id.detail_image);
+        // productImage=view.findViewById(R.id.detail_image);
+        slider = view.findViewById(R.id.banner_slider1);
 
         // Toast.makeText(getContext(), "test"+test, Toast.LENGTH_SHORT).show();
         return view;
 
     }
 
+    public class MainSliderAdapter extends SliderAdapter {
+        int itemCount = 3;
+
+        public void setItemCount(int itemCount) {
+            this.itemCount = itemCount;
+        }
+
+        @Override
+        public int getItemCount() {
+            return itemCount;
+
+        }
+
+        @Override
+        public void onBindImageSlide(int position, ImageSlideViewHolder viewHolder) {
+            switch (position) {
+                case 0:
+                    if (product.getImages().size() > 0)
+                        viewHolder.bindImageSlide(product.getImages().get(0).getPath());
+                    break;
+                case 1:
+                    if (product.getImages().size() > 1)
+                        viewHolder.bindImageSlide(product.getImages().get(1).getPath());
+                    break;
+                case 2:
+                    if (product.getImages().size() > 2)
+                        viewHolder.bindImageSlide(product.getImages().get(2).getPath());
+                    break;
+                case 3:
+                    if (product.getImages().size() > 3)
+                        viewHolder.bindImageSlide(product.getImages().get(3).getPath());
+                    break;
+                case 4:
+                    if (product.getImages().size() > 4)
+                        viewHolder.bindImageSlide(product.getImages().get(4).getPath());
+                    break;
+                case 5:
+                    if (product.getImages().size() > 5)
+                        viewHolder.bindImageSlide(product.getImages().get(5).getPath());
+                    break;
+                case 6:
+                    if (product.getImages().size() > 6)
+                        viewHolder.bindImageSlide(product.getImages().get(6).getPath());
+                    break;
+                case 7:
+                    if (product.getImages().size() > 7)
+                        viewHolder.bindImageSlide(product.getImages().get(7).getPath());
+                    break;
+            }
+        }
+    }
 }

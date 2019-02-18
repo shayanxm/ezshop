@@ -86,6 +86,12 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
 
+            <ss.com.bannerslider.Slider
+                android:id="@+id/banner_slider1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="16dp" />
+
             <TextView
                 android:id="@+id/item_detail_titile"
                 android:layout_width="match_parent"
@@ -95,14 +101,8 @@
                 android:text="کاپشن زنانه"
                 android:textColor="@android:color/background_dark" />
 
-            <ImageView
-                android:id="@+id/detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="@drawable/defulat" />
-
             <TextView
-                android:id="@+id/item_detail_name"
+                android:id="@+id/item_detail_slug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"

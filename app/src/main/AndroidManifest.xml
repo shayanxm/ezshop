@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shayanmoradi.ezshop">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".slider.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".itemDetail.ItemDetailActivity" />
-        <activity android:name=".subcategory.SubCategoryActivity"></activity>
+        <activity android:name=".subcategory.SubCategoryActivity" />
+        <activity android:name=".itemsofcategory.ItemsOfActivity"></activity>
     </application>
 
 </manifest>

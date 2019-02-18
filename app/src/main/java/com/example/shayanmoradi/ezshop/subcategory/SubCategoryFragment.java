@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.Model.Category;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -87,7 +88,7 @@ public class SubCategoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getActivity(), "this is "+category.getId(), Toast.LENGTH_SHORT).show();
-                    Intent intent= SubCategoryActivity.newIntent(getActivity(),category.getId());
+                    Intent intent= ItemsOfActivity.newIntent(getActivity(),category.getId());
                     startActivity(intent);
 
                 }
