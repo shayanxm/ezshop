@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    tools:context=".itemDetail.ItemDetailFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".itemDetail.ItemDetailFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap">
 
 
@@ -28,21 +29,24 @@
 
                     <ImageButton
                         android:id="@+id/imageButton3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center|end"
                         android:layout_marginTop="4dp"
                         android:layout_marginRight="8dp"
-                        android:background="@drawable/list" />
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/right_arrow" />
 
                     <TextView
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="48dp"
+                        android:layout_marginRight="36dp"
+                        android:layout_marginBottom="2dp"
                         android:gravity="right"
-                        android:text="ez shop"
+                        android:text="مشخصات محصول"
                         android:textAllCaps="false"
                         android:textColor="#fff"
                         android:textSize="20sp"
@@ -50,21 +54,6 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginLeft="38dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/list" />
-
-                    <ImageButton
-                        android:id="@+id/imageButton2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/list" />
 
                 </FrameLayout>
 
@@ -77,14 +66,26 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view3"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+
+
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:scaleType="center"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ss.com.bannerslider.Slider
                 android:id="@+id/banner_slider1"
@@ -109,21 +110,69 @@
                 android:gravity="start"
                 android:text="Blicee 61b05 jacket for women" />
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="200dp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
-        android:text="مشخصات :"
-        android:textColor="@android:color/black" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/desc_continer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </ScrollView>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="28dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="8dp"
+                        android:text="مشخصات :"
+                        android:textColor="@android:color/black" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/option_coniner"
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/attrubite_coniner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
 
-</androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

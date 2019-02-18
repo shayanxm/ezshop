@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Category;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
@@ -33,7 +34,7 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class CategoryFragment extends Fragment {
-
+    LottieAnimationView lottieAnimationView;
     private RecyclerView recyclerView;
     private CustomerAdapter customerAdapter;
 
@@ -57,6 +58,7 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_category, container, false);
         recyclerView = view.findViewById(R.id.category_rec);
+        lottieAnimationView=view.findViewById(R.id.animation_view2);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCatrgories().enqueue(new Callback<List<Category>>() {
@@ -67,6 +69,7 @@ public class CategoryFragment extends Fragment {
                 List<Category>partents=Category.filterParents(categories);
                 customerAdapter = new CustomerAdapter(partents);
                 recyclerView.setAdapter(customerAdapter);
+                lottieAnimationView.setVisibility(View.GONE);
             }
 
             @Override

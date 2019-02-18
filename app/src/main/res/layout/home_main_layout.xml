@@ -13,6 +13,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_collapseMode="pin"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
 
@@ -22,20 +23,26 @@
 
                 <ImageButton
                     android:id="@+id/imageButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center|end"
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/list_menu" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/title_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="120dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="48dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="-74dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/logo"
                     android:gravity="right"
+                    android:scaleType="center"
                     android:text="ez shop"
                     android:textAllCaps="false"
                     android:textColor="#fff"
@@ -49,16 +56,20 @@
                     android:id="@+id/imageButton"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="38dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/magnifying_glass" />
 
                 <ImageButton
                     android:id="@+id/imageButton2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/shopping_cart" />
+                    android:background="@drawable/shopping_cart"
+                    android:layout_marginBottom="2dp" />
 
             </FrameLayout>
 
@@ -69,7 +80,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:layoutDirection="ltr"
             android:scrollbarSize="3dp"

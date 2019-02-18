@@ -17,12 +17,14 @@ public class Product {
     private String mPrice;
     @SerializedName("related_ids")
     private List<Integer> mRelatedIds;
+    private List<Attribute>attributes;
 
     private List<Image> images;
     private String enlgishName;
 
-    public Product(int mId, String mName, String mDateCreated, String mCompliteDescription, String mPrice, List<Integer> mRelatedIds, List<Image> images, String mCategory) {
+    public Product(int mId, String mName, String mDateCreated, String mCompliteDescription, String mPrice, List<Attribute> attributes, List<Integer> mRelatedIds, List<Image> images, String mCategory) {
         this.mId = mId;
+        this.attributes=attributes;
         this.mName = mName;
         this.mDateCreated = mDateCreated;
         this.mCompliteDescription = mCompliteDescription;
@@ -30,6 +32,10 @@ public class Product {
         this.mRelatedIds = mRelatedIds;
         this.images = images;
 
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
     public int getmId() {

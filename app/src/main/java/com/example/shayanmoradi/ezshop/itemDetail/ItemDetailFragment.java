@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.shayanmoradi.ezshop.Model.Attribute;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.network.Api;
@@ -33,11 +36,16 @@ public class ItemDetailFragment extends Fragment {
     private static final String PRODUCT_ID = "com.example.shayanmoradi.ezshop.itemDetail.productid";
     Product product;
     private TextView productName;
+    LottieAnimationView lottieAnimationView;
     private TextView productPrice;
     private ImageView productImage;
+    private TextView descTv;
     Slider slider;
     int photoCounter;
+    private LinearLayout attrebiutContiner;
+    private LinearLayout optionContiner;
     private TextView productSlug;
+    List<Attribute> attributes;
 
     public static ItemDetailFragment newInstance(int id) {
 
@@ -66,14 +74,20 @@ public class ItemDetailFragment extends Fragment {
                 product = response.body();
                 Toast.makeText(getContext(), "t" + product.getmName(), Toast.LENGTH_SHORT).show();
                 productName.setText(product.getmName());
-             productSlug.setText(product.getEnlgishName(product));
+                productSlug.setText(product.getmPrice() +" T");
 //
 //                if (product.getImages() != null && product.getImages().size() > 0)
 //                    Picasso.get().load(product.getImages().get(0).getPath()).into(productImage);
                 photoCounter = product.getImages().size();
                 MainSliderAdapter mainSliderAdapter = new MainSliderAdapter();
                 mainSliderAdapter.setItemCount(photoCounter);
+                attributes = product.getAttributes();
                 slider.setAdapter(mainSliderAdapter);
+                crateAttrebutes();
+                createOptions();
+//                Toast.makeText(getContext(), "t" + attributes.get(1).getOptions().get(1), Toast.LENGTH_SHORT).show();
+                descTv.setText(product.getmCompliteDescription());
+                lottieAnimationView.setVisibility(View.GONE);
             }
 
             @Override
@@ -85,15 +99,51 @@ public class ItemDetailFragment extends Fragment {
 
     }
 
+    private void createOptions() {
+
+        for (int i = 0; i < attributes.size(); i++) {
+            TextView text = new TextView(getActivity());
+            text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            String optionString = "";
+            for (int j = 0; j < attributes.get(i).getOptions().size() ; j++) {
+                optionString += attributes.get(i).getOptions().get(j) ;
+                if (j>=0&&j+1<attributes.get(i).getOptions().size())
+                    optionString+= " , ";
+            }
+            text.setText(optionString);
+            text.setPadding(8, 8, 20, 8);
+            optionContiner.addView(text);
+        }
+    }
+
+    private void crateAttrebutes() {
+        for (int i = 0; i < attributes.size(); i++) {
+            TextView text = new TextView(getActivity());
+            text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            String optionString = "";
+//            for (int j = 0; j < attributes.get(j).getOptions().size() - 1; j++) {
+//                optionString += attributes.get(j).getOptions().get(i) + ",";
+//            }
+            text.setText(attributes.get(i).getName() + ":");
+            text.setPadding(8, 8, 20, 8);
+            attrebiutContiner.addView(text);
+        }
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        descTv = view.findViewById(R.id.desc_continer);
+        attrebiutContiner = view.findViewById(R.id.attrubite_coniner);
+        lottieAnimationView=view.findViewById(R.id.animation_view3);
+
+        optionContiner = view.findViewById(R.id.option_coniner);
+
         productName = view.findViewById(R.id.item_detail_titile);
-productSlug= view.findViewById(R.id.item_detail_slug);
+        productSlug = view.findViewById(R.id.item_detail_slug);
         //productPrice=view.findViewById(R.id.item_price);
         // productImage=view.findViewById(R.id.detail_image);
         slider = view.findViewById(R.id.banner_slider1);

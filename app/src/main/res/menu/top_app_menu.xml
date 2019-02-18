@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single"
-        >
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@android:drawable/btn_star_big_off"
@@ -12,27 +11,42 @@
             android:id="@+id/nav_bag"
             android:icon="@android:drawable/btn_star_big_off"
             android:title="سبد خرید" />
-        <item
-            android:id="@+id/nav_news"
-            android:icon="@android:drawable/btn_star_big_off"
-            android:title="جدید ترین ها" />
-        <item
-            android:id="@+id/nav_hits"
-            android:icon="@android:drawable/btn_star_big_off"
-            android:title="پر بازدید ترین ها" />
-        <item
-            android:id="@+id/nav_top_sales"
-            android:icon="@android:drawable/btn_star_big_off"
-            android:title="پر فروش ترین ها" />
-        <item
-        android:id="@+id/nav_setting"
-        android:icon="@android:drawable/btn_star_big_off"
-        android:title="تنظیمات" />
-        <item
-            android:id="@+id/nav_about_us"
-            android:icon="@android:drawable/btn_star_big_off"
-            android:title="درباره ی ما" />
-
     </group>
+    <group>
+        <item android:title="ترین ها ">
+            <menu>
 
+                <item
+                    android:id="@+id/nav_news"
+                    android:icon="@android:drawable/btn_star_big_off"
+                    android:title="جدید ترین ها" />
+
+                <item
+                    android:id="@+id/nav_hits"
+                    android:icon="@android:drawable/btn_star_big_off"
+                    android:title="پر بازدید ترین ها" />
+                <item
+                    android:id="@+id/nav_top_sales"
+                    android:icon="@android:drawable/btn_star_big_off"
+                    android:title="پر فروش ترین ها" />
+            </menu>
+        </item>
+        <group>
+            <item android:title= "دسترسی ها">
+                <menu>
+
+                    <item
+                        android:id="@+id/nav_setting"
+                        android:icon="@android:drawable/btn_star_big_off"
+                        android:title="تنظیمات" />
+                    <item
+                        android:id="@+id/nav_about_us"
+                        android:icon="@android:drawable/btn_star_big_off"
+                        android:title="درباره ی ما" />
+
+
+                </menu>
+            </item>
+        </group>
+    </group>
 </menu>
