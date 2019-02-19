@@ -120,8 +120,8 @@ public class CategoryFragment extends Fragment {
 
 
 
-            if (this.category.getImages() != null && this.category.getImages().size() > 0)
-                Picasso.get().load(this.category.getImages().get(0).getPath()).into(image);
+            if (this.category.getImages() != null )
+                Picasso.get().load(this.category.getImages().getPath()).into(image);
             //  customerAge.setText();
             //set age
 

@@ -49,6 +49,11 @@ public class SubCategoryFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          parentId=  getArguments().getInt(CATEGORY_ID);
+         if (parentId==15){
+             Intent intent= ItemsOfActivity.newIntent(getActivity(),15);
+             startActivity(intent);
+
+         }
     }
 
     @Override
@@ -103,8 +108,8 @@ public class SubCategoryFragment extends Fragment {
 
 
 
-            if (this.category.getImages() != null && this.category.getImages().size() > 0)
-                Picasso.get().load(this.category.getImages().get(0).getPath()).into(image);
+            if (this.category.getImages() != null )
+                Picasso.get().load(this.category.getImages().getPath()).into(image);
             //  customerAge.setText();
             //set age
 

@@ -11,9 +11,10 @@ public class Category {
     private int id;
     @SerializedName("parent")
     private int parnetId;
-    private List<Image> images;
+    @SerializedName("image")
+    private Image images;
 
-    public Category(String name, String slug, int id, int parnetId, List<Image> images) {
+    public Category(String name, String slug, int id, int parnetId, Image images) {
         this.name = name;
         this.slug = slug;
         this.id = id;
@@ -37,7 +38,7 @@ public class Category {
         return parnetId;
     }
 
-    public List<Image> getImages() {
+    public Image getImages() {
         return images;
     }
 

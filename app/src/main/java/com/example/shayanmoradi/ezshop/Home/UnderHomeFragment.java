@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
+import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
@@ -65,15 +66,9 @@ public class UnderHomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-
-
-
-
-
-
         View view = inflater.inflate(R.layout.fragment_under_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
-        lottieAnimationView=view.findViewById(R.id.animation_view);
+        lottieAnimationView = view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
         topRatedsRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
@@ -88,43 +83,33 @@ public class UnderHomeFragment extends Fragment {
 //        } e
 
         }
+//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+//                .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                List<Product> productList = response.body();
+//                customerAdapter = new CustomerAdapter(productList);
+//                newestRec.setAdapter(customerAdapter);
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
+//
+//            }
+//        });
+
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
+                .getAllProducts().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                customerAdapter = new CustomerAdapter(productList);
-                newestRec.setAdapter(customerAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-
-
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                newestAdapter = new CustomerAdapter(productList);
-                topSalesRec.setAdapter(newestAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                topRatedtAdapter = new CustomerAdapter(productList);
+                Repository.getInstance().setAllProducts(response.body());
+                topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
                 topRatedsRec.setAdapter(topRatedtAdapter);
+                ///
+                customerAdapter = new CustomerAdapter(Product.getTopsales());
+              topSalesRec.setAdapter(customerAdapter);
+                Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
                 lottieAnimationView.setVisibility(View.GONE);
 
             }
@@ -134,6 +119,37 @@ public class UnderHomeFragment extends Fragment {
 
             }
         });
+
+                RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                        .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        List<Product> productList = response.body();
+                        newestAdapter = new CustomerAdapter(productList);
+                        newestRec.setAdapter(newestAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                    }
+                });
+//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+//                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                List<Product> productList = response.body();
+//                topRatedtAdapter = new CustomerAdapter(productList);
+//                topRatedsRec.setAdapter(topRatedtAdapter);
+//                lottieAnimationView.setVisibility(View.GONE);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
+//
+//            }
+//        });
 
         return view;
     }
@@ -172,7 +188,7 @@ public class UnderHomeFragment extends Fragment {
 
             name.setText(product.getmName());
 
-            price.setText(product.getmPrice()+" T");
+            price.setText(product.getmPrice() + " T");
 
 
             if (product.getImages() != null && product.getImages().size() > 0)
@@ -217,11 +233,12 @@ public class UnderHomeFragment extends Fragment {
             return mProduct.size();
         }
     }
+
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
             Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
             return false;
         }
