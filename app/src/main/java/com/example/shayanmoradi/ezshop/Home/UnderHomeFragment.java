@@ -198,7 +198,7 @@ public class UnderHomeFragment extends Fragment {
 
             name.setText(product.getmName());
 
-            price.setText(product.getmPrice() + " T");
+            price.setText(product.getmPrice() );
 
 
             if (product.getImages() != null && product.getImages().size() > 0)

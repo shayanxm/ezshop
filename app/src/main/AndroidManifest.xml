@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".itemDetail.ItemDetailActivity" />
         <activity android:name=".subcategory.SubCategoryActivity" />
-        <activity android:name=".itemsofcategory.ItemsOfActivity"></activity>
+        <activity android:name=".itemsofcategory.ItemsOfActivity" />
+        <activity android:name=".Home.CategoryActivity"></activity>
     </application>
 
 </manifest>

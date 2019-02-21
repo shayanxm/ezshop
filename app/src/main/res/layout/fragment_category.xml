@@ -8,20 +8,108 @@
     tools:context=".Home.CategoryFragment"
     android:orientation="vertical">
 
- <com.airbnb.lottie.LottieAnimationView
-     android:id="@+id/animation_view2"
-     android:layout_width="140dp"
-     android:layout_height="140dp"
-
-
-     android:layout_gravity="center_horizontal"
-     android:layout_marginTop="200dp"
-     android:scaleType="center"
-     app:lottie_autoPlay="true"
-     app:lottie_loop="true"
-     app:lottie_rawRes="@raw/loading" />
- <androidx.recyclerview.widget.RecyclerView
-     android:id="@+id/category_rec"
+ <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="match_parent" />
+     android:layout_height="match_parent"
+     android:orientation="vertical">
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+   <androidx.appcompat.widget.Toolbar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_collapseMode="pin"
+       app:layout_scrollFlags="scroll|enterAlways|snap">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+     <ImageButton
+         android:id="@+id/back_btn"
+         android:layout_width="32dp"
+         android:layout_height="32dp"
+         android:layout_gravity="center|end"
+         android:layout_marginTop="4dp"
+         android:layout_marginRight="8dp"
+         android:layout_marginBottom="2dp"
+         android:background="@drawable/right_arrow" />
+
+     <TextView
+         android:id="@+id/title_text"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_gravity="center"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="36dp"
+         android:layout_marginBottom="2dp"
+         android:gravity="right"
+         android:text="دسته بندی "
+         android:textAllCaps="false"
+         android:textColor="#fff"
+         android:textSize="20sp"
+         android:textStyle="bold"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintLeft_toLeftOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
+
+
+   </androidx.appcompat.widget.Toolbar>
+
+   <com.google.android.material.tabs.TabLayout
+       android:id="@+id/tabs"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layoutDirection="ltr"
+       android:scrollbarSize="3dp"
+       app:tabGravity="fill"
+       app:tabMode="scrollable"
+       android:background="@color/colorPrimary"
+       app:tabTextColor="@android:color/darker_gray"
+       app:tabSelectedTextColor="@android:color/white"
+       app:tabIndicatorColor="@android:color/white"
+       app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
+
+
+   </com.google.android.material.tabs.TabLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+ <androidx.viewpager.widget.ViewPager
+       android:id="@+id/viewPager"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_above="@+id/bottom_navigation"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+   </androidx.viewpager.widget.ViewPager>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+  <com.airbnb.lottie.LottieAnimationView
+      android:id="@+id/animation_view2"
+      android:layout_width="140dp"
+      android:layout_height="140dp"
+
+
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="200dp"
+      android:scaleType="center"
+      app:lottie_autoPlay="true"
+      app:lottie_loop="true"
+      app:lottie_rawRes="@raw/loading" />
+
+ </LinearLayout>
 </FrameLayout>
