@@ -87,7 +87,7 @@ public class CategoryFragment extends Fragment {
                 for (int i = 0; i < partents.size(); i++) {
                     if (partents.get(i).getId() == 15) {
 
-                        ItemsOfCategoryFragment tabLayoutFragment = ItemsOfCategoryFragment.newInstance(partents.get(i).getId());
+                        ItemsOfCategoryFragment tabLayoutFragment = ItemsOfCategoryFragment.newInstance(partents.get(i).getId(),"سایر");
 
                         adapter.addFrag(tabLayoutFragment, partents.get(i).getName());
                     } else {
@@ -160,7 +160,7 @@ public class CategoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (category.getId() == 15) {
-                        Intent intent = ItemsOfActivity.newIntent(getActivity(), category.getId());
+                        Intent intent = ItemsOfActivity.newIntent(getActivity(), category.getId(),"سایر");
                         startActivity(intent);
                     } else {
                         Toast.makeText(getActivity(), "this is " + category.getId(), Toast.LENGTH_SHORT).show();

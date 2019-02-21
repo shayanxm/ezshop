@@ -79,7 +79,7 @@ public class ItemDetailFragment extends Fragment {
                 product = response.body();
 //                Toast.makeText(getContext(), "t" + product.getmName(), Toast.LENGTH_SHORT).show();
                 productName.setText(product.getmName());
-                productSlug.setText(product.getmPrice() +" T");
+                productSlug.setText(product.getmPrice() +"  تومان ");
 
 //
 //                if (product.getImages() != null && product.getImages().size() > 0)
@@ -118,6 +118,7 @@ isOnline(getContext());
             }
             text.setText(optionString);
             text.setPadding(8, 8, 20, 8);
+            text.setGravity(View.TEXT_ALIGNMENT_CENTER);
             optionContiner.addView(text);
         }
     }

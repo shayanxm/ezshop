@@ -24,7 +24,7 @@ public interface Api {
     @GET("products?&consumer_key=" +
             "ck_1e873ec76b5b531ed19a5458dcfa29f7cabf0fa6&consumer_secret=" +
             "cs_4710a5d0b9657629f677eeff9cbe6a5ce8e9ca8f")
-    Call<List<Product>> getCommitsByName(@Query("orders") String order);
+    Call<List<Product>> getCommitsByName(@Query("orderby") String order);
 
     @GET("products/{name}?consumer_key=ck_1e873ec76b5b531ed19a5458dcfa29f7cabf0fa6&consumer_secret=cs_4710a5d0b9657629f677eeff9cbe6a5ce8e9ca8f")
     Call<Product> getProductById(@Path("name") int  productId);

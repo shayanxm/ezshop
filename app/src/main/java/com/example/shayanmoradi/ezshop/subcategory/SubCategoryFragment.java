@@ -51,7 +51,7 @@ public class SubCategoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
          parentId=  getArguments().getInt(CATEGORY_ID);
          if (parentId==15){
-             Intent intent= ItemsOfActivity.newIntent(getActivity(),15);
+             Intent intent= ItemsOfActivity.newIntent(getActivity(),15,"سایر");
              startActivity(intent);
 
          }
@@ -94,7 +94,7 @@ public class SubCategoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getActivity(), "this is "+category.getId(), Toast.LENGTH_SHORT).show();
-                    Intent intent= ItemsOfActivity.newIntent(getActivity(),category.getId());
+                    Intent intent= ItemsOfActivity.newIntent(getActivity(),category.getId(),category.getName());
                     startActivity(intent);
 
                 }

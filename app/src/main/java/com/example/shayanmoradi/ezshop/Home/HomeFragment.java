@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Product;
-import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
@@ -128,35 +127,85 @@ NavigationView navigationView;
         navigationView.setNavigationItemSelectedListener(this);
         slider.setAdapter(new MainSliderAdapter());
 
+//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+//                .getAllProducts().enqueue(new Callback<List<Product>>() {
+//            @Override
+//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+//                Repository.getInstance().setAllProducts(response.body());
+//                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
+//               // topRatedsRec.setAdapter(topRatedtAdapter);
+//                ///
+//             //   customerAdapter = new CustomerAdapter(Product.getTopsales());
+//            //    topSalesRec.setAdapter(customerAdapter);
+//                Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
+//                lottieAnimationView.setVisibility(View.GONE);
+//
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<List<Product>> call, Throwable t) {
+//                isOnline(getContext());
+//
+//            }
+//        });
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getAllProducts().enqueue(new Callback<List<Product>>() {
+                .getNewest().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                Repository.getInstance().setAllProducts(response.body());
-                topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
-                topRatedsRec.setAdapter(topRatedtAdapter);
-                ///
-                customerAdapter = new CustomerAdapter(Product.getTopsales());
-                topSalesRec.setAdapter(customerAdapter);
+                List<Product> productList = response.body();
+                     newestAdapter = new CustomerAdapter(productList);
+                      newestRec.setAdapter(newestAdapter);
                 Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
                 lottieAnimationView.setVisibility(View.GONE);
-
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                isOnline(getContext());
 
             }
         });
-
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        List<Product> productList = response.body();
+//                        newestAdapter = new CustomerAdapter(productList);
+//                        newestRec.setAdapter(newestAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                    }
+                });
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("rating").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> productList = response.body();
-                newestAdapter = new CustomerAdapter(productList);
-                newestRec.setAdapter(newestAdapter);
+                topRatedtAdapter = new CustomerAdapter(productList);
+                topRatedsRec.setAdapter(topRatedtAdapter);
+
+                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
+                // topRatedsRec.setAdapter(topRatedtAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("popularity").enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> productList = response.body();
+                customerAdapter = new CustomerAdapter(productList);
+                topSalesRec.setAdapter(customerAdapter);
+
+                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
+                // topRatedsRec.setAdapter(topRatedtAdapter);
             }
 
             @Override
