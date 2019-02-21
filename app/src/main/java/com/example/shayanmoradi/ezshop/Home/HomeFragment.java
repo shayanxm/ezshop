@@ -25,6 +25,7 @@ import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private RecyclerView topRatedsRec;
     private CustomerAdapter topRatedtAdapter;
     LottieAnimationView lottieAnimationView;
+    Chip chip;
     Slider slider;
     private ImageButton test;
 NavigationView navigationView;
@@ -81,6 +83,7 @@ NavigationView navigationView;
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
         setHasOptionsMenu(true);
+
         lottieAnimationView = view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
@@ -89,6 +92,8 @@ NavigationView navigationView;
         newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         LinearLayout linearLayout = view.findViewById(R.id.lottie_continer);
         test=view.findViewById(R.id.imageButton);
+
+
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
