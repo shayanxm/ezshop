@@ -1,7 +1,10 @@
 package com.example.shayanmoradi.ezshop.Home;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Category;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 import com.example.shayanmoradi.ezshop.subcategory.SubCategoryActivity;
@@ -22,6 +27,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,9 +45,9 @@ public class CategoryFragment extends Fragment {
     private CustomerAdapter customerAdapter;
 
     public static CategoryFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,17 +62,17 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
         recyclerView = view.findViewById(R.id.category_rec);
-        lottieAnimationView=view.findViewById(R.id.animation_view2);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        lottieAnimationView = view.findViewById(R.id.animation_view2);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCatrgories().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                List<Category>categories=response.body();
+                List<Category> categories = response.body();
                 Repository.getInstance().setAllCategories(categories);
-                List<Category>partents=Category.filterParents(categories);
+                List<Category> partents = Category.filterParents(categories);
                 customerAdapter = new CustomerAdapter(partents);
                 recyclerView.setAdapter(customerAdapter);
                 lottieAnimationView.setVisibility(View.GONE);
@@ -74,7 +80,7 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-
+                isOnline(getContext());
             }
         });
 
@@ -101,12 +107,17 @@ public class CategoryFragment extends Fragment {
             image = itemView.findViewById(R.id.category_image);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), "this is "+category.getId(), Toast.LENGTH_SHORT).show();
-                    Intent intent= SubCategoryActivity.newIntent(getActivity(),category.getId());
-                    startActivity(intent);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (category.getId() == 15) {
+                            Intent intent = ItemsOfActivity.newIntent(getActivity(), category.getId());
+                            startActivity(intent);
+                        } else {
+                        Toast.makeText(getActivity(), "this is " + category.getId(), Toast.LENGTH_SHORT).show();
+                        Intent intent = SubCategoryActivity.newIntent(getActivity(), category.getId());
+                        startActivity(intent);
+                    }
 
                 }
             });
@@ -118,10 +129,9 @@ public class CategoryFragment extends Fragment {
             name.setText(this.category.getName());
 
 
-
-
-            if (this.category.getImages() != null )
+            if (this.category.getImages() != null)
                 Picasso.get().load(this.category.getImages().getPath()).into(image);
+            else image.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.category));
             //  customerAge.setText();
             //set age
 
@@ -161,6 +171,22 @@ public class CategoryFragment extends Fragment {
         public int getItemCount() {
             return mProduct.size();
         }
+    }
+
+    public boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+            //  Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
+            DissConectedFragment datePickerFragment = new DissConectedFragment();
+//            datePickerFragment.setTargetFragment(Dis.this,
+//                    0);
+            datePickerFragment.show(getFragmentManager(), "MyDialog");
+            return false;
+
+        }
+        return true;
     }
 
 }

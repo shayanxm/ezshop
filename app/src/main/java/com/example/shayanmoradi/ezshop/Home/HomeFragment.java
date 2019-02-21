@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 //            public void onFailure(Call<List<Product>> call, Throwable t) {
 //
 //            }
-      //  });
+        //  });
     }
 
     @Override
@@ -73,13 +73,13 @@ public class HomeFragment extends Fragment {
         bottomNavigationView = view.findViewById(R.id.bottom_navigation);
         CategoryFragment tabLayoutFragment = CategoryFragment.newInstance();
 
-        adapter.addFrag(tabLayoutFragment, "                  دسته بندی                  ");
+        adapter.addFrag(tabLayoutFragment, "دسته بندی");
         UnderHomeFragment underHomeFragment = UnderHomeFragment.newInstance();
-        adapter.addFrag(underHomeFragment, "                         خانه                        ");
+        adapter.addFrag(underHomeFragment, "خانه");
 
 
         viewPager.setAdapter(adapter);
-
+        viewPager.setCurrentItem(1);
         return view;
     }
 
@@ -113,4 +113,4 @@ public class HomeFragment extends Fragment {
         }
 
     }
-    }
+}

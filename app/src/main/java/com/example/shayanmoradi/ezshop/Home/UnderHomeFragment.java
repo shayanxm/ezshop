@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
@@ -32,6 +33,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ss.com.bannerslider.Slider;
+import ss.com.bannerslider.adapters.SliderAdapter;
+import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 
 
 /**
@@ -45,6 +49,7 @@ public class UnderHomeFragment extends Fragment {
     private RecyclerView topRatedsRec;
     private CustomerAdapter topRatedtAdapter;
     LottieAnimationView lottieAnimationView;
+    Slider slider;
 
     public static UnderHomeFragment newInstance() {
 
@@ -78,11 +83,11 @@ public class UnderHomeFragment extends Fragment {
         // Add ImageView to LinearLayout
 
 
-        if (!isOnline()) {
-            Toast.makeText(getContext(), "disconect", Toast.LENGTH_SHORT).show();
+//        if (!isOnline()) {
+        //Toast.makeText(getContext(), "disconect", Toast.LENGTH_SHORT).show();
 //        } e
 
-        }
+        //  }
 //        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
 //                .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
 //            @Override
@@ -99,6 +104,10 @@ public class UnderHomeFragment extends Fragment {
 //            }
 //        });
 
+
+       slider=view.findViewById(R.id.banner_slider2);
+        slider.setAdapter(new MainSliderAdapter());
+
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getAllProducts().enqueue(new Callback<List<Product>>() {
             @Override
@@ -108,7 +117,7 @@ public class UnderHomeFragment extends Fragment {
                 topRatedsRec.setAdapter(topRatedtAdapter);
                 ///
                 customerAdapter = new CustomerAdapter(Product.getTopsales());
-              topSalesRec.setAdapter(customerAdapter);
+                topSalesRec.setAdapter(customerAdapter);
                 Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
                 lottieAnimationView.setVisibility(View.GONE);
 
@@ -116,24 +125,25 @@ public class UnderHomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                isOnline(getContext());
 
             }
         });
 
-                RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                        .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                        List<Product> productList = response.body();
-                        newestAdapter = new CustomerAdapter(productList);
-                        newestRec.setAdapter(newestAdapter);
-                    }
+        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> productList = response.body();
+                newestAdapter = new CustomerAdapter(productList);
+                newestRec.setAdapter(newestAdapter);
+            }
 
-                    @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
 
-                    }
-                });
+            }
+        });
 //        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
 //                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
 //            @Override
@@ -234,14 +244,73 @@ public class UnderHomeFragment extends Fragment {
         }
     }
 
-    public boolean isOnline() {
-        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    //    public boolean isOnline() {
+//        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+//
+//        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+//            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+//        return true;
+//    }
+    public boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
+            DissConectedFragment datePickerFragment = new DissConectedFragment();
+//            datePickerFragment.setTargetFragment(Dis.this,
+//                    0);
+            datePickerFragment.show(getFragmentManager(), "MyDialog");
             return false;
+
         }
         return true;
+    }
+
+    public class MainSliderAdapter extends SliderAdapter {
+        int itemCount = 4;
+
+        public void setItemCount(int itemCount) {
+            this.itemCount = itemCount;
+        }
+
+        @Override
+        public int getItemCount() {
+            return itemCount;
+
+        }
+
+
+        @Override
+        public void onBindImageSlide(int position, ImageSlideViewHolder viewHolder) {
+            switch (position) {
+                case 0:
+
+                    viewHolder.bindImageSlide(R.drawable.ini4);
+
+                    break;
+                case 1:
+
+                    viewHolder.bindImageSlide(R.drawable.ini5);
+                    break;
+                case 2:
+
+                    viewHolder.bindImageSlide(R.drawable.ini4);
+                    break;
+                case 3:
+
+                    viewHolder.bindImageSlide(R.drawable.ini5);
+                    break;
+                case 4:
+
+                    viewHolder.bindImageSlide(R.drawable.digi);
+                    break;
+
+
+            }
+        }
     }
 }

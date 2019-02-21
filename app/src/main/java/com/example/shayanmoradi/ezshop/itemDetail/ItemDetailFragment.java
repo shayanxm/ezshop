@@ -1,16 +1,20 @@
 package com.example.shayanmoradi.ezshop.itemDetail;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Attribute;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
@@ -46,6 +50,7 @@ public class ItemDetailFragment extends Fragment {
     private LinearLayout optionContiner;
     private TextView productSlug;
     List<Attribute> attributes;
+    private ImageButton backBtn;
 
     public static ItemDetailFragment newInstance(int id) {
 
@@ -72,9 +77,10 @@ public class ItemDetailFragment extends Fragment {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
                 product = response.body();
-                Toast.makeText(getContext(), "t" + product.getmName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "t" + product.getmName(), Toast.LENGTH_SHORT).show();
                 productName.setText(product.getmName());
                 productSlug.setText(product.getmPrice() +" T");
+
 //
 //                if (product.getImages() != null && product.getImages().size() > 0)
 //                    Picasso.get().load(product.getImages().get(0).getPath()).into(productImage);
@@ -92,7 +98,7 @@ public class ItemDetailFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-
+isOnline(getContext());
             }
         });
 
@@ -139,7 +145,13 @@ public class ItemDetailFragment extends Fragment {
         descTv = view.findViewById(R.id.desc_continer);
         attrebiutContiner = view.findViewById(R.id.attrubite_coniner);
         lottieAnimationView=view.findViewById(R.id.animation_view3);
-
+backBtn=view.findViewById(R.id.back_btn);
+backBtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        getActivity().finish();
+    }
+});
         optionContiner = view.findViewById(R.id.option_coniner);
 
         productName = view.findViewById(R.id.item_detail_titile);
@@ -148,7 +160,7 @@ public class ItemDetailFragment extends Fragment {
         // productImage=view.findViewById(R.id.detail_image);
         slider = view.findViewById(R.id.banner_slider1);
 
-        // Toast.makeText(getContext(), "test"+test, Toast.LENGTH_SHORT).show();
+
         return view;
 
     }
@@ -203,5 +215,20 @@ public class ItemDetailFragment extends Fragment {
                     break;
             }
         }
+    }
+    public boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+            //  Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
+            DissConectedFragment datePickerFragment = new DissConectedFragment();
+//            datePickerFragment.setTargetFragment(Dis.this,
+//                    0);
+            datePickerFragment.show(getFragmentManager(), "MyDialog");
+            return false;
+
+        }
+        return true;
     }
 }

@@ -19,6 +19,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,6 +111,7 @@ public class SubCategoryFragment extends Fragment {
 
             if (this.category.getImages() != null )
                 Picasso.get().load(this.category.getImages().getPath()).into(image);
+            else image.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.category));
             //  customerAge.setText();
             //set age
 

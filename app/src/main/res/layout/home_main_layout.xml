@@ -23,12 +23,11 @@
 
                 <ImageButton
                     android:id="@+id/imageButton3"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|end"
                     android:layout_marginTop="4dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="16dp"
                     android:background="@drawable/list_menu" />
 
                 <ImageView
@@ -54,22 +53,20 @@
 
                 <ImageButton
                     android:id="@+id/imageButton"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="38dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="2dp"
                     android:background="@drawable/magnifying_glass"
                     android:scaleType="centerCrop" />
 
                 <ImageButton
                     android:id="@+id/imageButton2"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="2dp"
                     android:background="@drawable/shopping_cart" />
 
             </FrameLayout>
@@ -81,13 +78,13 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:background="@color/colorPrimary"
             android:layoutDirection="ltr"
             android:scrollbarSize="3dp"
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/white"
-            app:tabMode="scrollable"
+
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabTextColor="@android:color/darker_gray">
