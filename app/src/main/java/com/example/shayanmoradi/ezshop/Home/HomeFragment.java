@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -23,11 +26,13 @@ import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
+import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +47,9 @@ import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView newestRec;
+    private DrawerLayout drawer;
     private CustomerAdapter customerAdapter;
     private RecyclerView topSalesRec;
     private CustomerAdapter newestAdapter;
@@ -52,7 +58,7 @@ public class HomeFragment extends Fragment {
     LottieAnimationView lottieAnimationView;
     Slider slider;
     private ImageButton test;
-
+NavigationView navigationView;
     public static UnderHomeFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -73,8 +79,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-        View view = inflater.inflate(R.layout.home_main_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
+        setHasOptionsMenu(true);
         lottieAnimationView = view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
@@ -87,7 +94,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(getActivity(),CategoryActivity.class);
-                startActivity(intent);
+               // startActivity(intent);
             }
         });
         // Add ImageView to LinearLayout
@@ -113,9 +120,12 @@ public class HomeFragment extends Fragment {
 //
 //            }
 //        });
-
-
+        navigationView = view.findViewById(R.id.nav_view);
+        drawer =  view.findViewById(R.id.drawer_layout);
         slider=view.findViewById(R.id.banner_slider2);
+
+
+        navigationView.setNavigationItemSelectedListener(this);
         slider.setAdapter(new MainSliderAdapter());
 
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
@@ -323,4 +333,54 @@ public class HomeFragment extends Fragment {
             }
         }
     }
-}
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.top_app_menu, menu);
+    }
+
+
+
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+   // }
+
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_categories) {
+
+            Intent intent = new Intent(getActivity(), CategoryActivity.class);
+            startActivity(intent);
+        }
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+
+         //   drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+
+    }

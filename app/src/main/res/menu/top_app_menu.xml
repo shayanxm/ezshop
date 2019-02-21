@@ -8,6 +8,10 @@
 
             android:title="خانه" />
         <item
+            android:id="@+id/nav_categories"
+            android:icon="@android:drawable/btn_star_big_off"
+            android:title="لیست دسته بندی محصولات" />
+        <item
             android:id="@+id/nav_bag"
             android:icon="@android:drawable/btn_star_big_off"
             android:title="سبد خرید" />

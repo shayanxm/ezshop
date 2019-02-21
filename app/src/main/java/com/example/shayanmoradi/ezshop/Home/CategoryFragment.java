@@ -98,7 +98,7 @@ public class CategoryFragment extends Fragment {
                 }
                 viewPager.setAdapter(adapter);
 
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(partents.size());
                 // Toast.makeText(getContext(), "end", Toast.LENGTH_SHORT).show();
 
 
