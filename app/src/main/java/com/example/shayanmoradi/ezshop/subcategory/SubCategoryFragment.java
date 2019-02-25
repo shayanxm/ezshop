@@ -107,8 +107,6 @@ public class SubCategoryFragment extends Fragment {
             name.setText(this.category.getName());
 
 
-
-
             if (this.category.getImages() != null )
                 Picasso.get().load(this.category.getImages().getPath()).into(image);
             else image.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.category));
@@ -152,8 +150,6 @@ public class SubCategoryFragment extends Fragment {
             return mProduct.size();
         }
     }
-
-
 
 
 }

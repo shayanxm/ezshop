@@ -26,7 +26,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
 
-                .replace(R.id.item_detail_continer,fragment1)
+                .replace(R.id.item_detail_continer,fragment1,"test")
                 .commit();
 
 

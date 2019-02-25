@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -11,34 +12,26 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
+            android:layoutDirection="rtl"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
 
-            <FrameLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center|end"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/list_menu" />
 
                 <ImageView
                     android:id="@+id/title_text"
                     android:layout_width="120dp"
-                    android:layout_height="56dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="-74dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="-52dp"
+                    android:layout_marginRight="-20dp"
                     android:background="@drawable/logo"
                     android:gravity="right"
                     android:scaleType="center"
@@ -47,29 +40,30 @@
                     android:textColor="#fff"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    tools:layout_editor_absoluteX="144dp" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/search_button"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="180dp"
                     android:background="@drawable/magnifying_glass"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="112dp" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/bag_btn"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/shopping_cart" />
+                    android:layout_gravity="center_vertical|center"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shopping_cart"
+                    tools:layout_editor_absoluteX="92dp"
+                    tools:layout_editor_absoluteY="20dp" />
 
-            </FrameLayout>
+            </LinearLayout>
 
 
         </androidx.appcompat.widget.Toolbar>
@@ -85,7 +79,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
-        tools:context=".Home.UnderHomeFragment">
+        tools:context=".Home.HomeFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <FrameLayout
@@ -467,18 +461,18 @@
 
             </LinearLayout>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animation_view"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+            <!--<com.airbnb.lottie.LottieAnimationView-->
+                <!--android:id="@+id/animation_view"-->
+                <!--android:layout_width="140dp"-->
+                <!--android:layout_height="140dp"-->
 
 
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="200dp"
-                android:scaleType="center"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/loading" />
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="200dp"-->
+                <!--android:scaleType="center"-->
+                <!--app:lottie_autoPlay="true"-->
+                <!--app:lottie_loop="true"-->
+                <!--app:lottie_rawRes="@raw/loading" />-->
 
         </FrameLayout>
     </ScrollView>

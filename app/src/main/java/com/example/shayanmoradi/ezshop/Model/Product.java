@@ -99,9 +99,9 @@ public class Product {
         return whereToConcat + product.getmName().length() + "";
     }
 
-    public static List<Product> getTopHits() {
+    public static List<Product> getTopHits(List<Product>allProducts) {
 
-        List<Product> allProducts = Repository.getInstance().getAllProducts();
+       // List<Product> allProducts = Repository.getInstance().getAllProducts();
         List<Product> resList = new ArrayList<>();
 
 
@@ -128,9 +128,9 @@ public class Product {
             resList=Arrays.asList(tempList);
         return resList;
     }
-    public static List<Product> getTopsales() {
+    public static List<Product> getTopsales(List<Product>allProducts) {
 
-        List<Product> allProducts = Repository.getInstance().getAllProducts();
+        //List<Product> allProducts = Repository.getInstance().getAllProducts();
         List<Product> resList = new ArrayList<>();
 
 

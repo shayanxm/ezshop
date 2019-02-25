@@ -77,12 +77,13 @@
         android:scaleType="center"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading" />
+         />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/testingg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

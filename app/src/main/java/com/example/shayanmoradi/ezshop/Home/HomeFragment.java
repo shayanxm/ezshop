@@ -1,11 +1,9 @@
 package com.example.shayanmoradi.ezshop.Home;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,12 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Product;
+import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
-import com.example.shayanmoradi.ezshop.network.Api;
-import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -32,13 +28,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.adapters.SliderAdapter;
 import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
@@ -47,7 +43,7 @@ import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener{
+public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView newestRec;
     private DrawerLayout drawer;
     private CustomerAdapter customerAdapter;
@@ -56,15 +52,20 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     private RecyclerView topRatedsRec;
     private CustomerAdapter topRatedtAdapter;
     LottieAnimationView lottieAnimationView;
+    List<Product> topHits;
+    List<Product> newest;
+    List<Product> topRated;
     Chip chip;
+    Toolbar toolbar;
     Slider slider;
     private ImageButton test;
-NavigationView navigationView;
-    public static UnderHomeFragment newInstance() {
+    NavigationView navigationView;
+
+    public static HomeFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        UnderHomeFragment fragment = new UnderHomeFragment();
+        HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,6 +74,14 @@ NavigationView navigationView;
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        topHits = Repository.getInstance().getTopHits();
+        newest = Repository.getInstance().getNewest();
+        topRated = Repository.getInstance().getTopRated();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,150 +100,42 @@ NavigationView navigationView;
         topSalesRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         LinearLayout linearLayout = view.findViewById(R.id.lottie_continer);
-        test=view.findViewById(R.id.imageButton);
+        slider = view.findViewById(R.id.banner_slider2);
 
+        toolbar = view.findViewById(R.id.toolbar);
 
-        test.setOnClickListener(new View.OnClickListener() {
+        navigationView = view.findViewById(R.id.nav_view);
+        drawer = view.findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(),CategoryActivity.class);
-               // startActivity(intent);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) {
+                    drawer.closeDrawer(Gravity.RIGHT);
+                } else {
+                    drawer.openDrawer(Gravity.RIGHT);
+                }
             }
         });
-        // Add ImageView to LinearLayout
-
-
-//        if (!isOnline()) {
-        //Toast.makeText(getContext(), "disconect", Toast.LENGTH_SHORT).show();
-//        } e
-
-        //  }
-//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-//                .getCommitsByName("total_sale").enqueue(new Callback<List<Product>>() {
-//            @Override
-//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-//                List<Product> productList = response.body();
-//                customerAdapter = new CustomerAdapter(productList);
-//                newestRec.setAdapter(customerAdapter);
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<List<Product>> call, Throwable t) {
-//
-//            }
-//        });
-        navigationView = view.findViewById(R.id.nav_view);
-        drawer =  view.findViewById(R.id.drawer_layout);
-        slider=view.findViewById(R.id.banner_slider2);
-
 
         navigationView.setNavigationItemSelectedListener(this);
         slider.setAdapter(new MainSliderAdapter());
 
-//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-//                .getAllProducts().enqueue(new Callback<List<Product>>() {
-//            @Override
-//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-//                Repository.getInstance().setAllProducts(response.body());
-//                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
-//               // topRatedsRec.setAdapter(topRatedtAdapter);
-//                ///
-//             //   customerAdapter = new CustomerAdapter(Product.getTopsales());
-//            //    topSalesRec.setAdapter(customerAdapter);
-//                Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
-//                lottieAnimationView.setVisibility(View.GONE);
-//
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<List<Product>> call, Throwable t) {
-//                isOnline(getContext());
-//
-//            }
-//        });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getNewest().enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                     newestAdapter = new CustomerAdapter(productList);
-                      newestRec.setAdapter(newestAdapter);
-                Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
-                lottieAnimationView.setVisibility(View.GONE);
-            }
+        newestAdapter = new CustomerAdapter(newest);
+        newestRec.setAdapter(newestAdapter);
 
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+        topRatedtAdapter = new CustomerAdapter(topRated);
+        topRatedsRec.setAdapter(topRatedtAdapter);
 
-            }
-        });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("date_created").enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                        List<Product> productList = response.body();
-//                        newestAdapter = new CustomerAdapter(productList);
-//                        newestRec.setAdapter(newestAdapter);
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
-
-                    }
-                });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("rating").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                topRatedtAdapter = new CustomerAdapter(productList);
-                topRatedsRec.setAdapter(topRatedtAdapter);
-
-                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
-                // topRatedsRec.setAdapter(topRatedtAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("popularity").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                customerAdapter = new CustomerAdapter(productList);
-                topSalesRec.setAdapter(customerAdapter);
-
-                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
-                // topRatedsRec.setAdapter(topRatedtAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-//        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-//                .getCommitsByName("average_rating").enqueue(new Callback<List<Product>>() {
-//            @Override
-//            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-//                List<Product> productList = response.body();
-//                topRatedtAdapter = new CustomerAdapter(productList);
-//                topRatedsRec.setAdapter(topRatedtAdapter);
-//                lottieAnimationView.setVisibility(View.GONE);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Product>> call, Throwable t) {
-//
-//            }
-//        });
-
+        customerAdapter = new CustomerAdapter(topHits);
+        topSalesRec.setAdapter(customerAdapter);
         return view;
     }
 
@@ -272,7 +173,7 @@ NavigationView navigationView;
 
             name.setText(product.getmName());
 
-            price.setText(product.getmPrice() );
+            price.setText(product.getmPrice());
 
 
             if (product.getImages() != null && product.getImages().size() > 0)
@@ -301,7 +202,7 @@ NavigationView navigationView;
         public CustoemrHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             View view = inflater.inflate(R.layout.rec_home_item, parent, false);
-        CustoemrHolder custoemrHolder = new CustoemrHolder(view);
+            CustoemrHolder custoemrHolder = new CustoemrHolder(view);
             return custoemrHolder;
         }
 
@@ -318,31 +219,6 @@ NavigationView navigationView;
         }
     }
 
-    //    public boolean isOnline() {
-//        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-//
-//        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-//            Toast.makeText(getContext(), "No Internet connection!", Toast.LENGTH_LONG).show();
-//            return false;
-//        }
-//        return true;
-//    }
-    public boolean isOnline(Context context) {
-        ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //  Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
-            DissConectedFragment datePickerFragment = new DissConectedFragment();
-//            datePickerFragment.setTargetFragment(Dis.this,
-//                    0);
-            datePickerFragment.show(getFragmentManager(), "MyDialog");
-            return false;
-
-        }
-        return true;
-    }
 
     public class MainSliderAdapter extends SliderAdapter {
         int itemCount = 4;
@@ -395,22 +271,6 @@ NavigationView navigationView;
     }
 
 
-
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-   // }
-
-
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -421,20 +281,8 @@ NavigationView navigationView;
             Intent intent = new Intent(getActivity(), CategoryActivity.class);
             startActivity(intent);
         }
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
-         //   drawer.closeDrawer(GravityCompat.START);
-            return true;
-        }
-
+        return true;
     }
+
+}

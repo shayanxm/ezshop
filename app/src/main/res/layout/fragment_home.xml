@@ -9,7 +9,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".Home.HomeFragment"
-    tools:openDrawer="start">
+
+    tools:openDrawer="end">
 
     <include
         layout="@layout/home_main_layout"
@@ -23,6 +24,7 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
         android:layoutDirection="rtl"
+
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/top_app_menu" />
 

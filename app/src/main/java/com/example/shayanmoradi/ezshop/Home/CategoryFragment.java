@@ -1,23 +1,19 @@
 package com.example.shayanmoradi.ezshop.Home;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.shayanmoradi.ezshop.DissConectedFragment;
 import com.example.shayanmoradi.ezshop.Model.Category;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.customerhandler.HandleThings;
 import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfActivity;
 import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfCategoryFragment;
 import com.example.shayanmoradi.ezshop.network.Api;
@@ -73,9 +69,9 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category, container, false);
-        // recyclerView = view.findViewById(R.id.category_rec);
+
         lottieAnimationView = view.findViewById(R.id.animation_view2);
-//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getCatrgories().enqueue(new Callback<List<Category>>() {
             @Override
@@ -87,7 +83,7 @@ public class CategoryFragment extends Fragment {
                 for (int i = 0; i < partents.size(); i++) {
                     if (partents.get(i).getId() == 15) {
 
-                        ItemsOfCategoryFragment tabLayoutFragment = ItemsOfCategoryFragment.newInstance(partents.get(i).getId(),"سایر");
+                        ItemsOfCategoryFragment tabLayoutFragment = ItemsOfCategoryFragment.newInstance(partents.get(i).getId(), "سایر");
 
                         adapter.addFrag(tabLayoutFragment, partents.get(i).getName());
                     } else {
@@ -99,17 +95,14 @@ public class CategoryFragment extends Fragment {
                 viewPager.setAdapter(adapter);
 
                 viewPager.setCurrentItem(partents.size());
-                // Toast.makeText(getContext(), "end", Toast.LENGTH_SHORT).show();
 
-
-//                customerAdapter = new CustomerAdapter(partents);
-//                recyclerView.setAdapter(customerAdapter);
-//                lottieAnimationView.setVisibility(View.GONE);
+                lottieAnimationView.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                isOnline(getContext());
+
+                HandleThings.isOnline(getContext(),getFragmentManager());
             }
         });
 
@@ -117,21 +110,6 @@ public class CategoryFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         tabLayout.setupWithViewPager(viewPager);
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-
-//        SubCategoryFragment tabLayoutFragment = SubCategoryFragment.newInstance(87);
-//
-//        adapter.addFrag(tabLayoutFragment, "دسته بندی");
-//        SubCategoryFragment underHomeFragment = SubCategoryFragment.newInstance(87);
-//        adapter.addFrag(underHomeFragment, "خانه");
-////
-//
-//
-//        SubCategoryFragment underHomeFragment2 = SubCategoryFragment.newInstance(87);
-//        adapter.addFrag(underHomeFragment2, "خانه");
-
-//        adapter.addFrag(tabLayoutFragment, "دسته بندی");
-//        SubCategoryFragment underHomeFragment3 = SubCategoryFragment.newInstance(87);
-//        adapter.addFrag(underHomeFragment3, "خانه");
 
 
         return view;
@@ -160,10 +138,10 @@ public class CategoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (category.getId() == 15) {
-                        Intent intent = ItemsOfActivity.newIntent(getActivity(), category.getId(),"سایر");
+                        Intent intent = ItemsOfActivity.newIntent(getActivity(), category.getId(), "سایر");
                         startActivity(intent);
                     } else {
-                        Toast.makeText(getActivity(), "this is " + category.getId(), Toast.LENGTH_SHORT).show();
+
                         Intent intent = SubCategoryActivity.newIntent(getActivity(), category.getId());
                         startActivity(intent);
                     }
@@ -222,21 +200,7 @@ public class CategoryFragment extends Fragment {
         }
     }
 
-    public boolean isOnline(Context context) {
-        ConnectivityManager conMgr = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
-            //  Toast.makeText(context, "No Internet connection!", Toast.LENGTH_LONG).show();
-            DissConectedFragment datePickerFragment = new DissConectedFragment();
-//            datePickerFragment.setTargetFragment(Dis.this,
-//                    0);
-            datePickerFragment.show(getFragmentManager(), "MyDialog");
-            return false;
-
-        }
-        return true;
-    }
 
     class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

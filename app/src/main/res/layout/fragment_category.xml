@@ -97,7 +97,7 @@
    </androidx.viewpager.widget.ViewPager>
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+ </LinearLayout>
   <com.airbnb.lottie.LottieAnimationView
       android:id="@+id/animation_view2"
       android:layout_width="140dp"
@@ -111,5 +111,5 @@
       app:lottie_loop="true"
       app:lottie_rawRes="@raw/loading" />
 
- </LinearLayout>
+
 </FrameLayout>
