@@ -13,22 +13,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.MainActivity">
-
-        </activity>
+        <activity android:name=".Home.MainActivity" />
         <activity android:name=".itemDetail.ItemDetailActivity" />
-        <activity android:name=".subcategory.SubCategoryActivity" />
+        <activity android:name=".category.SubCategoryActivity" />
         <activity android:name=".itemsofcategory.ItemsOfActivity" />
-        <activity android:name=".Home.CategoryActivity" />
+        <activity android:name=".category.CategoryActivity" />
         <activity
             android:name=".Home.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            android:theme="@style/FullscreenTheme"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".search.SearchActivity" />
+        <activity android:name=".result.ReultActivity">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
     </application>
 
 </manifest>

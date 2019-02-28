@@ -1,4 +1,4 @@
-package com.example.shayanmoradi.ezshop.subcategory;
+package com.example.shayanmoradi.ezshop.category;
 
 
 import android.content.Intent;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/sub_category_continer"
     android:orientation="vertical"
-    tools:context=".subcategory.SubCategoryActivity">
+    tools:context=".category.SubCategoryActivity">
 
 
 </LinearLayout>

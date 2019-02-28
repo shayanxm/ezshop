@@ -1,4 +1,4 @@
-package com.example.shayanmoradi.ezshop.Home;
+package com.example.shayanmoradi.ezshop.category;
 
 import android.os.Bundle;
 

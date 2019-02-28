@@ -20,7 +20,9 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.category.CategoryActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
+import com.example.shayanmoradi.ezshop.search.SearchActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -60,6 +62,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
     Slider slider;
     private ImageButton test;
     NavigationView navigationView;
+    private ImageButton searchBtn;
 
     public static HomeFragment newInstance() {
 
@@ -101,7 +104,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         LinearLayout linearLayout = view.findViewById(R.id.lottie_continer);
         slider = view.findViewById(R.id.banner_slider2);
-
+searchBtn=view.findViewById(R.id.searching_btn);
         toolbar = view.findViewById(R.id.toolbar);
 
         navigationView = view.findViewById(R.id.nav_view);
@@ -136,6 +139,16 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
 
         customerAdapter = new CustomerAdapter(topHits);
         topSalesRec.setAdapter(customerAdapter);
+
+
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= SearchActivity.newIntent(getActivity());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

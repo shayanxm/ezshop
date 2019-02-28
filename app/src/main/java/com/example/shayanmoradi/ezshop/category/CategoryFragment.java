@@ -1,4 +1,4 @@
-package com.example.shayanmoradi.ezshop.Home;
+package com.example.shayanmoradi.ezshop.category;
 
 
 import android.content.Intent;
@@ -18,8 +18,6 @@ import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfActivity;
 import com.example.shayanmoradi.ezshop.itemsofcategory.ItemsOfCategoryFragment;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
-import com.example.shayanmoradi.ezshop.subcategory.SubCategoryActivity;
-import com.example.shayanmoradi.ezshop.subcategory.SubCategoryFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
