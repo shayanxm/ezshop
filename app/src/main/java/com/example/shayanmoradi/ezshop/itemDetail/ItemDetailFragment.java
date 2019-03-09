@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,8 @@ import com.example.shayanmoradi.ezshop.Model.Attribute;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.customerhandler.HandleThings;
+import com.example.shayanmoradi.ezshop.database.SavedProduct;
+import com.example.shayanmoradi.ezshop.database.SavedProductsManger;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 
@@ -35,7 +38,9 @@ import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
  */
 public class ItemDetailFragment extends Fragment {
     private static final String PRODUCT_ID = "com.example.shayanmoradi.ezshop.itemDetail.productid";
+
     Product product;
+    private Button addToBagBtn;
     private TextView productName;
     LottieAnimationView lottieAnimationView;
     private TextView productPrice;
@@ -49,6 +54,7 @@ public class ItemDetailFragment extends Fragment {
     List<Attribute> attributes;
     private ImageButton backBtn;
     LinearLayout linearLayout;
+    int productId;
 
     public static ItemDetailFragment newInstance(int id) {
 
@@ -70,7 +76,7 @@ public class ItemDetailFragment extends Fragment {
         final List<Product> products = null;
 
 
-        final int productId = getArguments().getInt(PRODUCT_ID);
+        productId = getArguments().getInt(PRODUCT_ID);
         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                 .getProductById(productId).enqueue(new Callback<Product>() {
             @Override
@@ -83,14 +89,13 @@ public class ItemDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
 
-                HandleThings.isOnline(getContext(),getFragmentManager());
+                HandleThings.isOnline(getContext(), getFragmentManager());
 
             }
         });
 
 
     }
-
 
 
     @Override
@@ -101,16 +106,23 @@ public class ItemDetailFragment extends Fragment {
         descTv = view.findViewById(R.id.desc_continer);
         attrebiutContiner = view.findViewById(R.id.attrubite_coniner);
         lottieAnimationView = view.findViewById(R.id.animation_view3);
-
+        addToBagBtn = view.findViewById(R.id.add_to_bag_btn);
         backBtn = view.findViewById(R.id.back_btn);
-        linearLayout=view.findViewById(R.id.testingg);
+        linearLayout = view.findViewById(R.id.testingg);
         optionContiner = view.findViewById(R.id.option_coniner);
         //createOptionsq();
         productName = view.findViewById(R.id.item_detail_titile);
         productSlug = view.findViewById(R.id.item_detail_slug);
         lottieAnimationView.setAnimation("loading.json");
         slider = view.findViewById(R.id.banner_slider1);
-
+        addToBagBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SavedProduct savedProduct = new SavedProduct();
+                savedProduct.setProductId(productId);
+                SavedProductsManger.getInstance(getActivity()).addToBag(savedProduct);
+            }
+        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,10 +131,10 @@ public class ItemDetailFragment extends Fragment {
         });
 
 
-
         return view;
 
     }
+
     private void setViewUpWithIncomingRes() {
         productName.setText(product.getmName());
         productSlug.setText(product.getmPrice() + "  تومان ");
@@ -169,6 +181,7 @@ public class ItemDetailFragment extends Fragment {
         }
 
     }
+
     public class MainSliderAdapter extends SliderAdapter {
         int itemCount = 3;
 

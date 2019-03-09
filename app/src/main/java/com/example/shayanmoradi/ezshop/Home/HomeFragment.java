@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.Model.Repository;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.bag.BagActivity;
 import com.example.shayanmoradi.ezshop.category.CategoryActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.search.SearchActivity;
@@ -47,6 +48,7 @@ import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
  */
 public class HomeFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView newestRec;
+    private ImageButton goToBagBtn;
     private DrawerLayout drawer;
     private CustomerAdapter customerAdapter;
     private RecyclerView topSalesRec;
@@ -95,7 +97,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
         setHasOptionsMenu(true);
-
+goToBagBtn=view.findViewById(R.id.bag_btn);
         lottieAnimationView = view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
@@ -146,6 +148,14 @@ searchBtn=view.findViewById(R.id.searching_btn);
             @Override
             public void onClick(View v) {
                 Intent intent= SearchActivity.newIntent(getActivity());
+                startActivity(intent);
+            }
+        });
+
+        goToBagBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getActivity(),BagActivity.class);
                 startActivity(intent);
             }
         });
