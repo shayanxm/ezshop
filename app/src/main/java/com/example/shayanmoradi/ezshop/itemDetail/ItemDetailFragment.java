@@ -120,6 +120,11 @@ public class ItemDetailFragment extends Fragment {
             public void onClick(View v) {
                 SavedProduct savedProduct = new SavedProduct();
                 savedProduct.setProductId(productId);
+                savedProduct.setProductName(product.getmName());
+                savedProduct.setProductImagePath(product.getImages().get(0).getPath());
+                savedProduct.setProductPrice(product.getmPrice());
+
+
                 SavedProductsManger.getInstance(getActivity()).addToBag(savedProduct);
             }
         });

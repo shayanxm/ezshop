@@ -304,6 +304,12 @@ searchBtn=view.findViewById(R.id.searching_btn);
             Intent intent = new Intent(getActivity(), CategoryActivity.class);
             startActivity(intent);
         }
+        if (id == R.id.nav_bag) {
+
+            Intent intent= new Intent(getActivity(),BagActivity.class);
+            startActivity(intent);
+        }
+
 
         return true;
     }
