@@ -45,7 +45,7 @@
                         android:layout_marginRight="36dp"
                         android:layout_marginBottom="2dp"
                         android:gravity="right"
-                        android:text="مشخصات محصول"
+                        android:text="سبد خرید"
                         android:textAllCaps="false"
                         android:textColor="#fff"
                         android:textSize="20sp"
@@ -104,7 +104,34 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bag_rec"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/confrim_bag"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#66bb6a"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/iransans"
+            android:layoutDirection="rtl"
+            android:text="خرید خود را نهایی کنید"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

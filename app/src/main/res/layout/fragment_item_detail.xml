@@ -111,12 +111,16 @@
                 android:layout_margin="8dp"
                 android:gravity="start"
                 android:text="Blicee 61b05 jacket for women" />
+
             <Button
-                android:layout_gravity="center"
-                android:text="buy this"
                 android:id="@+id/add_to_bag_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="افزون به سبد خرید"
+                app:icon="@drawable/shopping_cart" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
             android:layoutDirection="rtl"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+         >
 
 
             <LinearLayout

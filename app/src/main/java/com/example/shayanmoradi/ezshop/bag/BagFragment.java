@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.database.SavedProduct;
@@ -22,7 +25,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import it.sephiroth.android.library.numberpicker.NumberPicker;
 
 
 /**
@@ -32,7 +34,6 @@ public class BagFragment extends androidx.fragment.app.Fragment {
     private RecyclerView bagsRec;
     private CustomerAdapter bagtAdapter;
     private TextView fullBagPriceTv;
-
 
 
     public static BagFragment newInstance() {
@@ -53,37 +54,33 @@ public class BagFragment extends androidx.fragment.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_bag, container, false);
-        fullBagPriceTv=view.findViewById(R.id.full_bag_price_tv);
+        View view = inflater.inflate(R.layout.fragment_bag, container, false);
+        fullBagPriceTv = view.findViewById(R.id.full_bag_price_tv);
 
-        bagsRec=view.findViewById(R.id.bag_rec);
+        bagsRec = view.findViewById(R.id.bag_rec);
 
 
-        bagsRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL, false));
-        List<SavedProduct>savedProductList= SavedProductsManger.getInstance(getContext()).getBag();
+        bagsRec.setLayoutManager(new LinearLayoutManager(getContext()));
+        List<SavedProduct> savedProductList = SavedProductsManger.getInstance(getContext()).getBag();
         bagtAdapter = new CustomerAdapter(savedProductList);
         bagsRec.setAdapter(bagtAdapter);
 
-        fullBagPriceTv.setText(calcFullPrice()+"");
-
-
-
-
-
-
+        fullBagPriceTv.setText(calcFullPrice() + "");
 
 
         return view;
     }
+
     private class CustoemrHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
         private TextView price;
 
         private ImageView image;
-
+        private TextView fullItemPrice;
+        private TextView deleteItem;
         private SavedProduct product;
-
+        private Spinner countSpiner;
 
         public CustoemrHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,12 +88,14 @@ public class BagFragment extends androidx.fragment.app.Fragment {
             name = itemView.findViewById(R.id.titile_bag);
             price = itemView.findViewById(R.id.bag_price);
             image = itemView.findViewById(R.id.bag_image);
-
+            countSpiner = itemView.findViewById(R.id.count_item_spiner);
+            deleteItem = itemView.findViewById(R.id.delete_item);
+            fullItemPrice = itemView.findViewById(R.id.full_item_price);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  //  Toast.makeText(getActivity(), "this is " + product.getProductId(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(getActivity(), "this is " + product.getProductId(), Toast.LENGTH_SHORT).show();
                     Intent intent = ItemDetailActivity.newIntent(getActivity(), product.getProductId());
                     startActivity(intent);
 
@@ -110,12 +109,50 @@ public class BagFragment extends androidx.fragment.app.Fragment {
             name.setText(product.getProductName());
 
             price.setText(product.getProductPrice());
+            fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount()+"");
 
-
-            if (product.getProductImagePath() != null )
+            if (product.getProductImagePath() != null)
                 Picasso.get().load(product.getProductImagePath()).into(image);
-              //customerAge.setText();
+            //customerAge.setText();
             //set age
+
+
+            deleteItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SavedProductsManger.getInstance(getContext()).delete(product);
+                    List<SavedProduct> savedProductList = SavedProductsManger.getInstance(getContext()).getBag();
+                    bagtAdapter = new CustomerAdapter(savedProductList);
+                    bagsRec.setAdapter(bagtAdapter);
+                    SavedProductsManger.getInstance(getContext()).update(product);
+                    fullBagPriceTv.setText(calcFullPrice() + "");
+
+
+                }
+            });
+
+
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                    R.array.spiner_counts, R.layout.support_simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            countSpiner.setAdapter(adapter);
+            countSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    // String posi=parent.getItemAtPosition(position)
+                    Toast.makeText(getContext(), +position + "", Toast.LENGTH_SHORT).show();
+                    product.setCount(position + 1);
+                    SavedProductsManger.getInstance(getContext()).update(product);
+                    fullBagPriceTv.setText(calcFullPrice() + "");
+                    fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount()+"");
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
 
         }
@@ -154,15 +191,16 @@ public class BagFragment extends androidx.fragment.app.Fragment {
             return mProduct.size();
         }
     }
-private int calcFullPrice(){
-    List<SavedProduct>savedProductList= SavedProductsManger.getInstance(getContext()).getBag();
-    int result=0;
-    for (int i=0;i<savedProductList.size();i++){
 
-        result+=Integer.valueOf(savedProductList.get(i).getProductPrice());
+    private int calcFullPrice() {
+        List<SavedProduct> savedProductList = SavedProductsManger.getInstance(getContext()).getBag();
+        int result = 0;
+        for (int i = 0; i < savedProductList.size(); i++) {
 
+            result += Integer.valueOf(savedProductList.get(i).getProductPrice()) * savedProductList.get(i).getCount();
+
+        }
+        return result;
     }
-    return result;
-}
 
 }
