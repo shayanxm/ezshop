@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".order.OrderInfoFragment"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name_et"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="ادرس"
+        android:layoutDirection="rtl" />
+
+    <Button
+        android:id="@+id/pick_address_from_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="از روی نقشه" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/last_name_et"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="شهر"
+        android:layoutDirection="rtl" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/user_name_et"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="کشور"
+        android:layoutDirection="rtl" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/pasword_et"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="کد پستی"
+        android:layoutDirection="rtl" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email_et"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="تلفن"
+        android:layoutDirection="rtl" />
+
+    <Button
+        android:id="@+id/confrim__info_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ثبت مشخصات" />
+
+
+</LinearLayout>

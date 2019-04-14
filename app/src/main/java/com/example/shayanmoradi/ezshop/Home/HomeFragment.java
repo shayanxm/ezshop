@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
@@ -24,6 +23,7 @@ import com.example.shayanmoradi.ezshop.bag.BagActivity;
 import com.example.shayanmoradi.ezshop.category.CategoryActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.search.SearchActivity;
+import com.example.shayanmoradi.ezshop.setting.SettingActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -86,6 +86,17 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         newest = Repository.getInstance().getNewest();
         topRated = Repository.getInstance().getTopRated();
 
+
+//        PollService.setServiceAlarm(getContext(),true,1);
+
+
+//        Intent intent = new Intent(getActivity(), PollJobService.class);
+//        getActivity().startService(intent);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            PollJobService.scheduleService(getActivity(), 1);
+//
+//        }
+
     }
 
     @Override
@@ -97,7 +108,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         newestRec = view.findViewById(R.id.news_rec);
         setHasOptionsMenu(true);
-goToBagBtn=view.findViewById(R.id.bag_btn);
+        goToBagBtn = view.findViewById(R.id.bag_btn);
         lottieAnimationView = view.findViewById(R.id.animation_view);
         topSalesRec = view.findViewById(R.id.top_sales_rec);
         topRatedsRec = view.findViewById(R.id.top_rated_rec);
@@ -106,7 +117,7 @@ goToBagBtn=view.findViewById(R.id.bag_btn);
         newestRec.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         LinearLayout linearLayout = view.findViewById(R.id.lottie_continer);
         slider = view.findViewById(R.id.banner_slider2);
-searchBtn=view.findViewById(R.id.searching_btn);
+        searchBtn = view.findViewById(R.id.searching_btn);
         toolbar = view.findViewById(R.id.toolbar);
 
         navigationView = view.findViewById(R.id.nav_view);
@@ -143,11 +154,10 @@ searchBtn=view.findViewById(R.id.searching_btn);
         topSalesRec.setAdapter(customerAdapter);
 
 
-
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= SearchActivity.newIntent(getActivity());
+                Intent intent = SearchActivity.newIntent(getActivity());
                 startActivity(intent);
             }
         });
@@ -155,7 +165,7 @@ searchBtn=view.findViewById(R.id.searching_btn);
         goToBagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(),BagActivity.class);
+                Intent intent = new Intent(getActivity(), BagActivity.class);
                 startActivity(intent);
             }
         });
@@ -183,7 +193,7 @@ searchBtn=view.findViewById(R.id.searching_btn);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "this is " + product.getmId(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(), "this is " + product.getmId(), Toast.LENGTH_SHORT).show();
                     Intent intent = ItemDetailActivity.newIntent(getActivity(), product.getmId());
                     startActivity(intent);
 
@@ -306,7 +316,11 @@ searchBtn=view.findViewById(R.id.searching_btn);
         }
         if (id == R.id.nav_bag) {
 
-            Intent intent= new Intent(getActivity(),BagActivity.class);
+            Intent intent = new Intent(getActivity(), BagActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.nav_setting){
+            Intent intent =SettingActivity.newIntent(getContext());
             startActivity(intent);
         }
 

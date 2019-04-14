@@ -17,12 +17,14 @@ import android.widget.Toast;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.database.SavedProduct;
 import com.example.shayanmoradi.ezshop.database.SavedProductsManger;
+import com.example.shayanmoradi.ezshop.enterinfo.EnterInfoActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +36,8 @@ public class BagFragment extends androidx.fragment.app.Fragment {
     private RecyclerView bagsRec;
     private CustomerAdapter bagtAdapter;
     private TextView fullBagPriceTv;
+    private ConstraintLayout confrimBag;
+
 
 
     public static BagFragment newInstance() {
@@ -58,6 +62,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         fullBagPriceTv = view.findViewById(R.id.full_bag_price_tv);
 
         bagsRec = view.findViewById(R.id.bag_rec);
+        confrimBag= view.findViewById(R.id.confrim_bag);
 
 
         bagsRec.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -66,6 +71,13 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         bagsRec.setAdapter(bagtAdapter);
 
         fullBagPriceTv.setText(calcFullPrice() + "");
+        confrimBag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EnterInfoActivity.newIntent(getActivity());
+                startActivity(intent);
+            }
+        });
 
 
         return view;

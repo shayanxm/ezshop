@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".result.SortChoserDialogFragment">
+
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+
+            android:layout_weight="1"
+            android:fontFamily="@font/iransanslight"
+            android:layoutDirection="rtl"
+            android:paddingLeft="114dp"
+            android:text="  پرفروش ترین" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+
+            android:layout_weight="1"
+            android:fontFamily="@font/iransanslight"
+            android:layoutDirection="rtl"
+            android:paddingLeft="100dp"
+            android:text="  قیمت کم به زیاد" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+
+            android:layout_weight="1"
+            android:fontFamily="@font/iransanslight"
+            android:layoutDirection="rtl"
+            android:paddingLeft="100dp"
+            android:text="  قیمت زیاد به کم" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/iransanslight"
+            android:layoutDirection="rtl"
+            android:paddingLeft="128dp"
+            android:text="  جدید ترین" />
+
+
+    </RadioGroup>
+
+</LinearLayout>
