@@ -1,57 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".enterinfo.EnterInfoFragment"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:layoutDirection="rtl">
+    tools:context=".enterinfo.EnterInfoFragment"
+    >
 
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/name_et"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="نام"
-        android:layoutDirection="rtl" />
+        android:layout_marginTop="52dp"
+        android:orientation="horizontal">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/last_name_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="نام خانوادگی"
-        android:layoutDirection="rtl" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="28dp"
+            android:hint="نام"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="226dp"
+            tools:layout_editor_absoluteY="52dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/user_name_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="نام کاربری"
-        android:layoutDirection="rtl" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_et"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/pasword_et"
-        android:layout_width="100dp"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginRight="8dp"
+            android:hint="نام خانوادگی"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="52dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name_et"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="57dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="28dp"
+            android:hint="نام کاربری"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="226dp"
+            tools:layout_editor_absoluteY="129dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_et"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:hint="ایمیل"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="129dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_et"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
         android:hint="رمز عبور"
-        android:layoutDirection="rtl" />
+        android:layoutDirection="rtl"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="205dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="ایمیل"
-        android:layoutDirection="rtl" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pas"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/confrim__info_btn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ثبت مشخصات" />
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="ثبت مشخصات"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="319dp" />
+
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.shayanmoradi.ezshop.itemDetail;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.example.shayanmoradi.ezshop.database.SavedProduct;
 import com.example.shayanmoradi.ezshop.database.SavedProductsManger;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
+import com.example.shayanmoradi.ezshop.review.ReviewActivity;
 
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class ItemDetailFragment extends Fragment {
     Product product;
     private Button addToBagBtn;
     private TextView productName;
+    private Button seeReviewsBtn;
     LottieAnimationView lottieAnimationView;
     private TextView productPrice;
     private ImageView productImage;
@@ -115,6 +118,7 @@ public class ItemDetailFragment extends Fragment {
         productSlug = view.findViewById(R.id.item_detail_slug);
         lottieAnimationView.setAnimation("loading.json");
         slider = view.findViewById(R.id.banner_slider1);
+        seeReviewsBtn=view.findViewById(R.id.see_reviews_btn);
         addToBagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +132,15 @@ public class ItemDetailFragment extends Fragment {
                 SavedProductsManger.getInstance(getActivity()).addToBag(savedProduct);
             }
         });
+
+        seeReviewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ReviewActivity.newIntent(getActivity(),productId);
+                startActivity(intent);
+            }
+        });
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

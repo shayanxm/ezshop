@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.Model.orderingModels.Customer;
@@ -16,6 +17,7 @@ import com.example.shayanmoradi.ezshop.order.OrderInfoActivity;
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
+import com.example.shayanmoradi.ezshop.prefs.QueryPreferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +29,12 @@ import retrofit2.Response;
  */
 public class EnterInfoFragment extends androidx.fragment.app.Fragment {
 private Button confrimInfo;
+
+private EditText customerName;
+    private EditText customerLastName;
+    private EditText customerUserName;
+    private EditText customerEmail;
+    private EditText custoemrPass;
     public static EnterInfoFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -47,10 +55,20 @@ private Button confrimInfo;
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_enter_info, container, false);
         confrimInfo=view.findViewById(R.id.confrim__info_btn);
+        customerName=view.findViewById(R.id.name_et);
+        customerLastName=view.findViewById(R.id.last_name_et);
+        customerUserName=view.findViewById(R.id.user_name_et);
+        customerEmail=view.findViewById(R.id.email_et);
+        custoemrPass=view.findViewById(R.id.pas);
+
+
         confrimInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           // createCustomer("first","is","hi","tat@gmial.com");
+            createCustomer(customerName.getText().toString()
+                    ,customerLastName.getText().toString()
+                    ,customerUserName.getText().toString()
+                    ,customerEmail.getText().toString());
 
                 Intent intent = OrderInfoActivity.newIntent(getActivity());
                 startActivity(intent);
@@ -59,7 +77,7 @@ private Button confrimInfo;
         });
    return view;
     }
-private  void createCustomer(String firstName,String lastName,String userName,String email){
+private  void createCustomer(final String firstName, String lastName, String userName, final String email){
 
 
     RetrofitClientInstance.getRetrofitInstance().create(Api.class).createCustomer(firstName, lastName, userName, email)
@@ -75,6 +93,13 @@ private  void createCustomer(String firstName,String lastName,String userName,St
 
                         Toast.makeText(getContext(), id+"", Toast.LENGTH_SHORT).show();
                         Toast.makeText(getContext(), "worked", Toast.LENGTH_SHORT).show();
+
+
+
+                        QueryPreferences.setIsLogin(getContext(),true);
+                        QueryPreferences.setCustomerEmail(getContext(),email);
+                        QueryPreferences.setCustomerId(getContext(),id);
+                    QueryPreferences.setCustomerName(getContext(),firstName);
 //                    }
                 }
 

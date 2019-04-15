@@ -19,6 +19,8 @@ import com.example.shayanmoradi.ezshop.database.SavedProduct;
 import com.example.shayanmoradi.ezshop.database.SavedProductsManger;
 import com.example.shayanmoradi.ezshop.enterinfo.EnterInfoActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
+import com.example.shayanmoradi.ezshop.order.OrderInfoActivity;
+import com.example.shayanmoradi.ezshop.prefs.QueryPreferences;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,7 +39,6 @@ public class BagFragment extends androidx.fragment.app.Fragment {
     private CustomerAdapter bagtAdapter;
     private TextView fullBagPriceTv;
     private ConstraintLayout confrimBag;
-
 
 
     public static BagFragment newInstance() {
@@ -62,7 +63,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         fullBagPriceTv = view.findViewById(R.id.full_bag_price_tv);
 
         bagsRec = view.findViewById(R.id.bag_rec);
-        confrimBag= view.findViewById(R.id.confrim_bag);
+        confrimBag = view.findViewById(R.id.confrim_bag);
 
 
         bagsRec.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -74,8 +75,13 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         confrimBag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = EnterInfoActivity.newIntent(getActivity());
-                startActivity(intent);
+                if (!QueryPreferences.getIsLogin(getActivity())) {
+                    Intent intent = EnterInfoActivity.newIntent(getActivity());
+                    startActivity(intent);
+                }else if (QueryPreferences.getIsLogin(getActivity())){
+                    Intent intent = OrderInfoActivity.newIntent(getActivity());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -121,7 +127,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
             name.setText(product.getProductName());
 
             price.setText(product.getProductPrice());
-            fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount()+"");
+            fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount() + "");
 
             if (product.getProductImagePath() != null)
                 Picasso.get().load(product.getProductImagePath()).into(image);
@@ -156,7 +162,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
                     product.setCount(position + 1);
                     SavedProductsManger.getInstance(getContext()).update(product);
                     fullBagPriceTv.setText(calcFullPrice() + "");
-                    fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount()+"");
+                    fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount() + "");
 
                 }
 

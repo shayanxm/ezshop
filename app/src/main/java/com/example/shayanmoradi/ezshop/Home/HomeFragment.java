@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         topRated = Repository.getInstance().getTopRated();
 
 
+
 //        PollService.setServiceAlarm(getContext(),true,1);
 
 
