@@ -105,7 +105,7 @@
             android:layout_gravity="center"
             android:ems="10"
             android:hint="زمان به ساعت"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
     </androidx.cardview.widget.CardView>
 

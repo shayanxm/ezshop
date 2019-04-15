@@ -10,9 +10,9 @@ import android.net.ConnectivityManager;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.example.shayanmoradi.ezshop.Home.MainActivity;
 import com.example.shayanmoradi.ezshop.Model.Product;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 import com.example.shayanmoradi.ezshop.prefs.QueryPreferences;
@@ -36,14 +36,14 @@ public class PollService extends IntentService {
         return new Intent(context, PollService.class);
     }
 
-    public static void setServiceAlarm(Context context, boolean isOn,int time) {
+    public static void setServiceAlarm(Context context, boolean isOn, int time) {
         Intent i = newIntent(context);
         PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-      if (isOn) {
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime(), POLL_INTERVAL*time, pi);
+        if (isOn) {
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
+                    SystemClock.elapsedRealtime(), POLL_INTERVAL * time, pi);
         } else {
             alarmManager.cancel(pi);
             pi.cancel();
@@ -97,46 +97,58 @@ public class PollService extends IntentService {
                     List<Product> productList = response.body();
                     //   Log.e("test", Arrays.toString(productList.toArray())+"array XD");
 
-                    laetesProduct = productList.get(1);
-
-
-                    Log.d("test", "id is" + lastIdLive);
+                    laetesProduct = productList.get(0);
                     lastIdLive = laetesProduct.getmId();
 
-                    QueryPreferences.setStoredQuery(PollService.this, lastIdLive);
+                    Log.e("test", "id is" + lastIdLive);
+//////////////
+                    int savedLastId = QueryPreferences.getStoredQurey(PollService.this);
+                    if (savedLastId == lastIdLive) {
+                        //no new res
+                    } else {
+//        send notification
 
+                        Log.e("test", "id is" + savedLastId);
+                        Intent i = ItemDetailActivity.newIntent(PollService.this, 81);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        PendingIntent pi = PendingIntent.getActivity(PollService.this, 0, i, 0);
+
+
+
+                        String channelId = getString(R.string.channel_id);
+                        Notification notification = new NotificationCompat.Builder(PollService.this, channelId)
+                                .setContentTitle("محصولات جدیدی اضافه شده ! به ما سر بزنید")
+
+                                .setSmallIcon(R.drawable.ezshoplogo)
+
+                                .setContentIntent(pi)
+                                .setAutoCancel(true)
+
+                                .build();
+
+                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(PollService.this);
+                        notificationManagerCompat.notify(0, notification);
+
+
+                        /////////////
+                        QueryPreferences.setStoredQuery(PollService.this, lastIdLive);
+
+                    }
+                    Log.d("test", "is not succ");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-
+                Log.d("test", "fail" + t.getMessage());
             }
         });
-        int savedLastId = QueryPreferences.getStoredQurey(PollService.this);
-//        if (savedLastId == lastIdLive) {
-//            //no new res
-//        } else {
-        //send notification
-        Log.e("test", "in background thread");
-        Intent i = new Intent(this, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
-        String channelId = getString(R.string.channel_id);
-        Notification notification = new NotificationCompat.Builder(this, channelId)
-                .setContentTitle(lastIdLive + "heey")
 
-                .setSmallIcon(R.drawable.logo)
-                .setContentIntent(pi)
-                .setAutoCancel(true)
-
-                .build();
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(0, notification);
-        // }
 
 
     }
 
+    }
 
-}
+
+

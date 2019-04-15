@@ -4,6 +4,7 @@ package com.example.shayanmoradi.ezshop.bag;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +134,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
                 Picasso.get().load(product.getProductImagePath()).into(image);
             //customerAge.setText();
             //set age
-
+            Log.e("test",product.getCount()+"");
 
             deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -153,6 +154,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                     R.array.spiner_counts, R.layout.support_simple_spinner_dropdown_item);
             adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
             countSpiner.setAdapter(adapter);
             countSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -160,6 +162,10 @@ public class BagFragment extends androidx.fragment.app.Fragment {
                     // String posi=parent.getItemAtPosition(position)
                     Toast.makeText(getContext(), +position + "", Toast.LENGTH_SHORT).show();
                     product.setCount(position + 1);
+                    product.setCount(position + 1);
+
+
+
                     SavedProductsManger.getInstance(getContext()).update(product);
                     fullBagPriceTv.setText(calcFullPrice() + "");
                     fullItemPrice.setText(Integer.valueOf(product.getProductPrice()) * product.getCount() + "");

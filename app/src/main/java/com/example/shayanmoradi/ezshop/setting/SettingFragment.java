@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.R;
@@ -26,6 +27,7 @@ public class SettingFragment extends androidx.fragment.app.Fragment {
     private Button confrimSettingBtn;
     public static int TIME_FOR_NOTIFICATION = 1;
     int chossedTime;
+    private EditText timeEnteredEt;
 
     public static SettingFragment newInstance() {
 
@@ -47,9 +49,23 @@ public class SettingFragment extends androidx.fragment.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         openTimeShosserCW = view.findViewById(R.id.open_time_chosser_cw);
-        confrimSettingBtn=view.findViewById(R.id.confrim_setting_btn);
+        confrimSettingBtn = view.findViewById(R.id.confrim_setting_btn);
+        timeEnteredEt = view.findViewById(R.id.enterd_time_edit_text);
 
-
+        confrimSettingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chossedTime != 0) {
+                    PollService.setServiceAlarm(getContext(), true, chossedTime );
+                } else if (Integer.parseInt(timeEnteredEt.getText().toString()) != 0) {
+                    int time = Integer.parseInt(timeEnteredEt.getText().toString());
+                    PollService.setServiceAlarm(getContext(), true, time );
+                } else {
+                    Toast.makeText(getActivity(), "zaman jadidi entkhab nashod", Toast.LENGTH_LONG).show();
+                }
+                getActivity().finish();
+            }
+        });
 
 
         //////////////////
@@ -63,12 +79,7 @@ public class SettingFragment extends androidx.fragment.app.Fragment {
                 dialogFrag.show(getFragmentManager(), "time_dialog");
             }
         });
-        confrimSettingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PollService.setServiceAlarm(getContext(),true,chossedTime);
-            }
-        });
+
 
         return view;
     }
@@ -100,7 +111,7 @@ public class SettingFragment extends androidx.fragment.app.Fragment {
                     break;
 
             }
-            Toast.makeText(getContext(), chossedTime+"", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), chossedTime + "", Toast.LENGTH_SHORT).show();
         }
     }
 }

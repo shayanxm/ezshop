@@ -3,61 +3,247 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".order.OrderInfoFragment"
-    android:orientation="vertical"
-    android:layoutDirection="rtl">
+    android:orientation="vertical">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/name_et"
-        android:layout_width="100dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/back_btn"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/right_arrow" />
+
+                    <TextView
+                        android:id="@+id/title_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="36dp"
+                        android:layout_marginBottom="2dp"
+                        android:gravity="right"
+                        android:text="ثبت سفارش"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </FrameLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="52dp"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:hint="کشور"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="226dp"
+            tools:layout_editor_absoluteY="52dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/country_et"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:hint="شهر"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="52dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/city_et"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="57dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"
+            android:hint="کد پستی"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="226dp"
+            tools:layout_editor_absoluteY="129dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/postal_code_et"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:hint="شماره تلفن"
+            android:layoutDirection="rtl"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="129dp"
+          >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone_et"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="phone"
+
+                android:layoutDirection="rtl" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="32dp">
+
+    <Button
+        android:id="@+id/chose_from_saved_addresses_btn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1"
+        android:text="ادرس های ثبت شده"></Button>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_marginRight="32dp"
+        android:layout_weight="1"
         android:hint="ادرس"
-        android:layoutDirection="rtl" />
+        android:layoutDirection="rtl"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="205dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/address_et"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</LinearLayout>
 
     <Button
         android:id="@+id/pick_address_from_map"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="انتخاب از روی نقشه"
+        app:icon="@drawable/maps_and_flags" />
+
+    <CheckBox
+        android:id="@+id/use_coupon_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="از روی نقشه" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/last_name_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="شهر"
-        android:layoutDirection="rtl" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/user_name_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="کشور"
-        android:layoutDirection="rtl" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/pasword_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="کد پستی"
-        android:layoutDirection="rtl" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="تلفن"
-        android:layoutDirection="rtl" />
-
-    <Button
-        android:id="@+id/confrim__info_btn"
+        android:layout_gravity="center"
+        android:text="استفاده از کوپن" />
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ثبت مشخصات" />
+        android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/confrim_order_cons"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_gravity="bottom"
+            android:background="@color/design_default_color_primary_dark">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/iransans"
+                android:text="ثبت سفارش"
+                android:textColor="#ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </LinearLayout>

@@ -119,50 +119,57 @@ public class SplashActivity extends Activity {
                 List<Product> productList = response.body();
                 Repository.getInstance().setNewest(productList);
                 lottieAnimationView.setVisibility(View.GONE);
-            }
+                ///////
 
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("rating").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                Repository.getInstance().setTopRated(productList);
-
-                //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
-                // topRatedsRec.setAdapter(topRatedtAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getCommitsByName("popularity").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                List<Product> productList = response.body();
-                Repository.getInstance().setTopHits(productList);
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                        .getCommitsByName("rating").enqueue(new Callback<List<Product>>() {
                     @Override
-                    public void run() {
-                        //Do something after 100ms
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(intent);
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        List<Product> productList = response.body();
+                        Repository.getInstance().setTopRated(productList);
 
-                        //handler.postDelayed(this, 2000);
-                        finish();
+                        //topRatedtAdapter = new CustomerAdapter(Product.getTopHits());
+                        // topRatedsRec.setAdapter(topRatedtAdapter);
+
+
+
+                        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                                .getCommitsByName("popularity").enqueue(new Callback<List<Product>>() {
+                            @Override
+                            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                                List<Product> productList = response.body();
+                                Repository.getInstance().setTopHits(productList);
+                                final Handler handler = new Handler();
+                               // handler.postDelayed(new Runnable() {
+                                  //  @Override
+                                  //  public void run() {
+                                        //Do something after 100ms
+                                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                        startActivity(intent);
+
+                                        //handler.postDelayed(this, 2000);
+                                        finish();
+                                    }
+                            //    }, 500);
+
+
+                            //}
+
+                            @Override
+                            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                            }
+                        });
+
+
                     }
-                }, 500);
 
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
 
+                    }
+                });
+                //////
             }
 
             @Override
@@ -170,6 +177,9 @@ public class SplashActivity extends Activity {
 
             }
         });
+
+
+
 
 
     }

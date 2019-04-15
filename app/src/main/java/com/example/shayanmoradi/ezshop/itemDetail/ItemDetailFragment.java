@@ -3,6 +3,7 @@ package com.example.shayanmoradi.ezshop.itemDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,23 +81,59 @@ public class ItemDetailFragment extends Fragment {
 
 
         productId = getArguments().getInt(PRODUCT_ID);
-        RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                .getProductById(productId).enqueue(new Callback<Product>() {
-            @Override
-            public void onResponse(Call<Product> call, Response<Product> response) {
-                product = response.body();
-                setViewUpWithIncomingRes();
-                lottieAnimationView.setVisibility(View.GONE);
-            }
+        if (productId==0) {
+            RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                    .getRot().enqueue(new Callback<List<Product>>() {
+                @Override
+                public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                    List<Product> productList = response.body();
+                    //   Log.e("test", Arrays.toString(productList.toArray())+"array XD");
 
-            @Override
-            public void onFailure(Call<Product> call, Throwable t) {
+                  Product  laetesProduct = productList.get(0);
+                     int lastIdLive = laetesProduct.getmId();
+                    RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                            .getProductById(lastIdLive).enqueue(new Callback<Product>() {
+                        @Override
+                        public void onResponse(Call<Product> call, Response<Product> response) {
 
-                HandleThings.isOnline(getContext(), getFragmentManager());
+                            product = response.body();
+                            setViewUpWithIncomingRes();
+                            lottieAnimationView.setVisibility(View.GONE);
+                        }
 
-            }
-        });
+                        @Override
+                        public void onFailure(Call<Product> call, Throwable t) {
 
+                            HandleThings.isOnline(getContext(), getFragmentManager());
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                }
+            });
+        }else {
+            RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                    .getProductById(productId).enqueue(new Callback<Product>() {
+                @Override
+                public void onResponse(Call<Product> call, Response<Product> response) {
+                    Log.e("test", productId + "");
+                    product = response.body();
+                    setViewUpWithIncomingRes();
+                    lottieAnimationView.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(Call<Product> call, Throwable t) {
+
+                    HandleThings.isOnline(getContext(), getFragmentManager());
+
+                }
+            });
+        }
 
     }
 
@@ -127,6 +164,7 @@ public class ItemDetailFragment extends Fragment {
                 savedProduct.setProductName(product.getmName());
                 savedProduct.setProductImagePath(product.getImages().get(0).getPath());
                 savedProduct.setProductPrice(product.getmPrice());
+
 
 
                 SavedProductsManger.getInstance(getActivity()).addToBag(savedProduct);

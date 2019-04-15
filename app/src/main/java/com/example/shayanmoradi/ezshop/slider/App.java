@@ -24,7 +24,7 @@ public class App extends Application {
         Slider.init(imageLoadingService);
 
 
-        MyDevOpenHelper myDevOpenHelper = new MyDevOpenHelper(this, "DatabaseName");
+        MyDevOpenHelper myDevOpenHelper = new MyDevOpenHelper(this, ";");
         Database db = myDevOpenHelper.getWritableDb();
 
         daoSession = new DaoMaster(db).newSession();

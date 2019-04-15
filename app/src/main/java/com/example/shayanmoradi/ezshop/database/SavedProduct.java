@@ -10,7 +10,7 @@ public class SavedProduct {
     private int ProductId;
     private String productName;
     private String productPrice;
-    private int count=1;
+    private int count;
 
     private String productImagePath;
 

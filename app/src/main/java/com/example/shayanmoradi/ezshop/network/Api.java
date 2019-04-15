@@ -23,8 +23,7 @@ import retrofit2.http.Query;
 public interface Api {
     public String AUTHENTICATION = "consumer_key=ck_00fdf4e3f65c5275d802b412db586ba2cac6835f&consumer_secret=cs_d2571d995db502ea4b04bfae270b92ac447eb8ba";
 
-    @GET("products?consumer_key=ck_1e873ec76b5b531ed19a5458dcfa29f7cabf0" +
-            "fa6&consumer_secret=cs_4710a5d0b9657629f677eeff9cbe6a5ce8e9ca8f")
+    @GET("products?consumer_key=ck_1e873ec76b5b531ed19a5458dcfa29f7cabf0fa6&consumer_secret=cs_4710a5d0b9657629f677eeff9cbe6a5ce8e9ca8f")
     Call<List<Product>> getRot();
 
 
