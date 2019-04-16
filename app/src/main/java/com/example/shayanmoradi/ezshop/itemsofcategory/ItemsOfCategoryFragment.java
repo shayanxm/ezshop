@@ -122,7 +122,7 @@ goToSort=view.findViewById(R.id.go_to_sort_card);
 goToSort.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        Intent intent= ReultActivity.newIntent(getActivity(),true,categoryId,"");
+        Intent intent= ReultActivity.newIntent(getActivity(),true,categoryId,"","");
         startActivity(intent);
     }
 });

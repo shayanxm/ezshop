@@ -47,4 +47,7 @@ public class SavedProductsManger {
     public void delete(SavedProduct songDetails) {
         detailsDao.delete(songDetails);
     }
+    public void deleteBgag() {
+        detailsDao.deleteAll();
+    }
 }

@@ -31,11 +31,12 @@ public class AddressManager {
     public Address getAddress(String address1) {
         List<Address> addressList = detailsDao.queryBuilder()
                 .where(AddressDao.Properties.Address1.eq(address1))
+
                 .list();
-        for (Address address : addressList) {
-            return address;
-        }
-        return null;
+//        for (Address address : addressList) {
+//            return address;
+//        }
+        return addressList.get(0);
     }
 
     public List<Address> getAllList() {

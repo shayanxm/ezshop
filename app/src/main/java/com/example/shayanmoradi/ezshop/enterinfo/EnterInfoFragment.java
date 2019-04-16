@@ -35,6 +35,7 @@ public class EnterInfoFragment extends androidx.fragment.app.Fragment {
     private EditText customerUserName;
     private EditText customerEmail;
     private EditText custoemrPass;
+    private boolean problemtrue = true;
 
     public static EnterInfoFragment newInstance() {
 
@@ -71,10 +72,6 @@ public class EnterInfoFragment extends androidx.fragment.app.Fragment {
                         , customerLastName.getText().toString()
                         , customerUserName.getText().toString()
                         , customerEmail.getText().toString());
-
-                Intent intent = OrderInfoActivity.newIntent(getActivity());
-                startActivity(intent);
-
             }
         });
         return view;
@@ -88,21 +85,35 @@ public class EnterInfoFragment extends androidx.fragment.app.Fragment {
 
                     @Override
                     public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
-//                    if (response.isSuccessful()){
-                        int id = response.body().getId();
-                        // String customerName=response.body().
-                        Log.e("testz", id + "");
+                        //  Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+                        if (response.isSuccessful()) {
+                            int id = response.body().getId();
+                            // String customerName=response.body().
+                            Log.e("testz", id + "");
 
-                        Toast.makeText(getContext(), id + "", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getContext(), "worked", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), id + "", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getContext(), "worked", Toast.LENGTH_SHORT).show();
 
 
-                        QueryPreferences.setIsLogin(getContext(), true);
-                        QueryPreferences.setCustomerEmail(getContext(), email);
-                        QueryPreferences.setCustomerId(getContext(), id);
-                        QueryPreferences.setCustomerName(getContext(), firstName);
-//                    }
+                            QueryPreferences.setIsLogin(getContext(), true);
+                            QueryPreferences.setCustomerEmail(getContext(), email);
+                            QueryPreferences.setCustomerId(getContext(), id);
+                            QueryPreferences.setCustomerName(getContext(), firstName);
+                            problemtrue = false;
+                        } else {
+                            Toast.makeText(getContext(), "مشکل در ثبت مشخصات", Toast.LENGTH_SHORT).show();
+                            problemtrue = true;
+                        }
+
+                        if (problemtrue == true) {
+                            Toast.makeText(getContext(), "مشکل در ثبت مشخصات", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+
+                            Intent intent = OrderInfoActivity.newIntent(getActivity());
+                            startActivity(intent);
+
+                        }
                     }
 
                     @Override

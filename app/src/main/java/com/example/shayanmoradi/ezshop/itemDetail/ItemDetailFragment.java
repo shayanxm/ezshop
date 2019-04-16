@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Attribute;
@@ -27,6 +29,7 @@ import com.example.shayanmoradi.ezshop.review.ReviewActivity;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,9 +46,9 @@ public class ItemDetailFragment extends Fragment {
     private static final String PRODUCT_ID = "com.example.shayanmoradi.ezshop.itemDetail.productid";
 
     Product product;
-    private Button addToBagBtn;
+private Button addToBagBtn;
     private TextView productName;
-    private Button seeReviewsBtn;
+   // private Button seeReviewsBtn;
     LottieAnimationView lottieAnimationView;
     private TextView productPrice;
     private ImageView productImage;
@@ -59,7 +62,9 @@ public class ItemDetailFragment extends Fragment {
     private ImageButton backBtn;
     LinearLayout linearLayout;
     int productId;
-
+    private ScrollView scrollView;
+private CardView seeReVeiwCv;
+private CardView seeSpecificationCv;
     public static ItemDetailFragment newInstance(int id) {
 
         Bundle args = new Bundle();
@@ -146,16 +151,22 @@ public class ItemDetailFragment extends Fragment {
         descTv = view.findViewById(R.id.desc_continer);
         attrebiutContiner = view.findViewById(R.id.attrubite_coniner);
         lottieAnimationView = view.findViewById(R.id.animation_view3);
-        addToBagBtn = view.findViewById(R.id.add_to_bag_btn);
+      addToBagBtn = view.findViewById(R.id.add_to_bag_btn);
         backBtn = view.findViewById(R.id.back_btn);
         linearLayout = view.findViewById(R.id.testingg);
         optionContiner = view.findViewById(R.id.option_coniner);
+        scrollView=view.findViewById(R.id.detail_Scroll_view);
         //createOptionsq();
         productName = view.findViewById(R.id.item_detail_titile);
         productSlug = view.findViewById(R.id.item_detail_slug);
         lottieAnimationView.setAnimation("loading.json");
         slider = view.findViewById(R.id.banner_slider1);
-        seeReviewsBtn=view.findViewById(R.id.see_reviews_btn);
+
+        seeReVeiwCv=view.findViewById(R.id.see_reviews_cv);
+        seeSpecificationCv=view.findViewById(R.id.se_specefication_cv);
+
+
+
         addToBagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,14 +179,23 @@ public class ItemDetailFragment extends Fragment {
 
 
                 SavedProductsManger.getInstance(getActivity()).addToBag(savedProduct);
+                Toast.makeText(getActivity(), "به سبد خرید اضافه شد", Toast.LENGTH_SHORT).show();
             }
         });
-
-        seeReviewsBtn.setOnClickListener(new View.OnClickListener() {
+        seeReVeiwCv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = ReviewActivity.newIntent(getActivity(),productId);
-                startActivity(intent);
+        startActivity(intent);
+            }
+        });
+
+        seeSpecificationCv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = ReviewActivity.newIntent(getActivity(),productId);
+//                startActivity(intent);
+                scrollView.scrollTo(0, scrollView.getChildAt(0).getHeight());
             }
         });
 

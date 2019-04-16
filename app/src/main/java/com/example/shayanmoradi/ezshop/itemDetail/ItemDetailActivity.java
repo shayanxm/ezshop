@@ -25,12 +25,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         if ((int) getIntent().getSerializableExtra(PRODUCT_ID) != 0) {
-
-        }else {
+            productID = (int) getIntent().getSerializableExtra(PRODUCT_ID);
+        } else {
             Bundle extras = getIntent().getExtras();
 
             productID = (int) extras.getSerializable(PRODUCT_ID);
         }
+
         Log.e("test", "p id" + productID);
         ItemDetailFragment fragment1 = ItemDetailFragment.newInstance(productID);
         getSupportFragmentManager()

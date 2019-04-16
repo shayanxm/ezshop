@@ -61,7 +61,7 @@ public class SettingFragment extends androidx.fragment.app.Fragment {
                     int time = Integer.parseInt(timeEnteredEt.getText().toString());
                     PollService.setServiceAlarm(getContext(), true, time );
                 } else {
-                    Toast.makeText(getActivity(), "zaman jadidi entkhab nashod", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "زمان جدیدی انتخاب نشد", Toast.LENGTH_LONG).show();
                 }
                 getActivity().finish();
             }

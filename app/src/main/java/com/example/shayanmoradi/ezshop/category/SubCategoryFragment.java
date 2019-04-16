@@ -93,7 +93,7 @@ public class SubCategoryFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "this is "+category.getId(), Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getActivity(), "this is "+category.getId(), Toast.LENGTH_SHORT).show();
                     Intent intent= ItemsOfActivity.newIntent(getActivity(),category.getId(),category.getName());
                     startActivity(intent);
 

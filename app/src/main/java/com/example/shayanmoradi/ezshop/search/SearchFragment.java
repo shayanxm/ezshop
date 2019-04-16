@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.result.ReultActivity;
@@ -47,7 +46,7 @@ private Button searchBtn;
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ReultActivity.newIntent(getActivity(), false, 0, searchEdit.getText().toString());
+                Intent intent = ReultActivity.newIntent(getActivity(), false, 0, searchEdit.getText().toString(),"");
                 startActivity(intent);
             }
         });
@@ -56,7 +55,7 @@ private Button searchBtn;
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Toast.makeText(getContext(), "sdfsdfsdf", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "sdfsdfsdf", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;

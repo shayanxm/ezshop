@@ -13,10 +13,12 @@ import static com.example.shayanmoradi.ezshop.result.ReulstFragment.SEARCHING_ST
 import static com.example.shayanmoradi.ezshop.result.ReulstFragment.TRUE_FOR_CATEGORY;
 
 public class ReultActivity extends AppCompatActivity {
-    public static Intent newIntent(Context context,boolean trueForCategory, int categoryId, String searchString) {
+    private static final String ORDER_BY = "com.example.shayanmoradi.ezshop.itemsofcategory.orderby";
+    public static Intent newIntent(Context context,boolean trueForCategory, int categoryId, String searchString,String orderBy) {
         Intent intent = new Intent(context, ReultActivity.class);
         intent.putExtra(TRUE_FOR_CATEGORY,trueForCategory);
         intent.putExtra(CATEGORY_ID, categoryId);
+        intent.putExtra(ORDER_BY, orderBy);
         intent.putExtra(SEARCHING_STRING, searchString);
         return intent;
     }
@@ -28,8 +30,8 @@ public class ReultActivity extends AppCompatActivity {
         int categoryID = (int) getIntent().getSerializableExtra(CATEGORY_ID);
         String searchString= (String) getIntent().getSerializableExtra(SEARCHING_STRING);
       boolean trueForCategory = (boolean) getIntent().getSerializableExtra(TRUE_FOR_CATEGORY);
-
-        ReulstFragment fragment1 = ReulstFragment.newInstance(trueForCategory,categoryID,searchString);
+String orderBy=(String) getIntent().getSerializableExtra(ORDER_BY);
+        ReulstFragment fragment1 = ReulstFragment.newInstance(trueForCategory,categoryID,searchString,orderBy);
         getSupportFragmentManager()
                 .beginTransaction()
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.shayanmoradi.ezshop.Model.Review;
 import com.example.shayanmoradi.ezshop.Model.orderingModels.Customer;
 import com.example.shayanmoradi.ezshop.R;
+import com.example.shayanmoradi.ezshop.enterinfo.EnterInfoActivity;
 import com.example.shayanmoradi.ezshop.network.Api;
 import com.example.shayanmoradi.ezshop.network.RetrofitClientInstance;
 import com.example.shayanmoradi.ezshop.prefs.QueryPreferences;
@@ -44,7 +45,6 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
     private static final String PRODUCT_ID = "com.example.shayanmoradi.ezshop.review";
     private boolean trueNewfalseEdit;
     private int currentRewViewId;
-
     public static ReViewFragment newInstance(int id) {
 
         Bundle args = new Bundle();
@@ -144,7 +144,8 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
         public void bind(final Review review) {
             this.review = review;
 
-            reviewTxtTv.setText(review.getReview());
+            reviewTxtTv.setText( reviewTextCreator(review.getReview()));
+            reviewTextCreator(review.getReview());
             reviwerNameTv.setText(review.getReviewer_name());
             reviewDateTv.setText(review.getDate_created());
             String userEmail;
@@ -161,13 +162,13 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
                 delteReviewBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                         RetrofitClientInstance.getRetrofitInstance().create(Api.class)
                                 .deleteReview(review.getId()).enqueue(new Callback<Review>() {
                             @Override
                             public void onResponse(Call<Review> call, Response<Review> response) {
-                                if (response.isSuccessful()){
-                                    Toast.makeText(getContext(), "ba moafaghiyat hazf shod", Toast.LENGTH_LONG).show();
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(getContext(), "از سبد خرید حذف شد", Toast.LENGTH_LONG).show();
                                     refreshFragment();
                                 }
                             }
@@ -183,7 +184,7 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
                 editBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        currentRewViewId=review.getId();
+                        currentRewViewId = review.getId();
                         DialogFragment dialogFrag = new ReviewEditoerFragment();
 // This is the requestCode that you are sending.
                         dialogFrag.setTargetFragment(ReViewFragment.this, 1);
@@ -202,6 +203,12 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
             //set age
 
 
+        }
+
+        private String reviewTextCreator(String review) {
+            String finalres;
+            finalres=review.substring(3,review.length()-5);
+            return finalres;
         }
 
         private void refreshFragment() {
@@ -268,6 +275,12 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
                                     Log.e("test", "posted braaa" + response.body().getId());
 
 
+                                } else {
+                                    if (QueryPreferences.getIsLogin(getContext()) == false) {
+                                        Toast.makeText(getContext(), "لظفا به حساب کاربری خود وارد شوید", Toast.LENGTH_SHORT).show();
+                                        Intent intent = EnterInfoActivity.newIntent(getContext());
+                                        startActivity(intent);
+                                    }
                                 }
                             }
 
@@ -277,14 +290,16 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
                             }
                         });
 
-            } {
+            }
+            {
                 //eidt old review
             }
 
-        }if (requestCode==1){
-            trueNewfalseEdit=false;
+        }
+        if (requestCode == 1) {
+            trueNewfalseEdit = false;
             String res = (String) data.getSerializableExtra(POSITOIN);
-            RetrofitClientInstance.getRetrofitInstance().create(Api.class).updateReview(currentRewViewId,res).enqueue(new Callback<Review>() {
+            RetrofitClientInstance.getRetrofitInstance().create(Api.class).updateReview(currentRewViewId, res).enqueue(new Callback<Review>() {
                 @Override
                 public void onResponse(Call<Review> call, Response<Review> response) {
                     refreshFragment();
@@ -299,6 +314,7 @@ public class ReViewFragment extends androidx.fragment.app.Fragment {
 
         }
     }
+
     private void refreshFragment() {
         androidx.fragment.app.Fragment frg = null;
         frg = getFragmentManager().findFragmentByTag("review_tag");

@@ -55,6 +55,11 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        doThings();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +72,13 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         confrimBag = view.findViewById(R.id.confrim_bag);
 
 
+        doThings();
+
+
+        return view;
+    }
+
+    private void doThings() {
         bagsRec.setLayoutManager(new LinearLayoutManager(getContext()));
         List<SavedProduct> savedProductList = SavedProductsManger.getInstance(getContext()).getBag();
         bagtAdapter = new CustomerAdapter(savedProductList);
@@ -76,6 +88,10 @@ public class BagFragment extends androidx.fragment.app.Fragment {
         confrimBag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (fullBagPriceTv.getText().equals("0")){
+                    Toast.makeText(getActivity(), "سبد خرید خالی است", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!QueryPreferences.getIsLogin(getActivity())) {
                     Intent intent = EnterInfoActivity.newIntent(getActivity());
                     startActivity(intent);
@@ -85,9 +101,6 @@ public class BagFragment extends androidx.fragment.app.Fragment {
                 }
             }
         });
-
-
-        return view;
     }
 
     private class CustoemrHolder extends RecyclerView.ViewHolder {
@@ -160,7 +173,7 @@ public class BagFragment extends androidx.fragment.app.Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     // String posi=parent.getItemAtPosition(position)
-                    Toast.makeText(getContext(), +position + "", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), +position + "", Toast.LENGTH_SHORT).show();
                     product.setCount(position + 1);
                     product.setCount(position + 1);
 

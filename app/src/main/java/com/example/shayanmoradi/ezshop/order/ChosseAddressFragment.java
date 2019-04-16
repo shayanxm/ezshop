@@ -55,18 +55,21 @@ addressKepperTv=itemView.findViewById(R.id.address_can_shossed_tv);
 
 
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//
-//                }
-//            });
+
     }
 
     public void bind(final Address address) {
         this.address = address;
         addressKepperTv.setText(address.getAddress1());
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendResult(address.getAddress1());
+                dismiss();
+            }
+        });
+
     }}
     class CustomerAdapter extends RecyclerView.Adapter<CustoemrHolder> {
 
@@ -114,9 +117,9 @@ addressKepperTv=itemView.findViewById(R.id.address_can_shossed_tv);
 
 
 
-    private void sendResult(int postion) {
+    private void sendResult(String address1) {
         Intent intent = new Intent();
-        intent.putExtra(TAG, postion);
+        intent.putExtra(TAG, address1);
         getTargetFragment().
                 onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
 

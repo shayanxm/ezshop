@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.shayanmoradi.ezshop.Model.Product;
@@ -22,6 +23,7 @@ import com.example.shayanmoradi.ezshop.R;
 import com.example.shayanmoradi.ezshop.bag.BagActivity;
 import com.example.shayanmoradi.ezshop.category.CategoryActivity;
 import com.example.shayanmoradi.ezshop.itemDetail.ItemDetailActivity;
+import com.example.shayanmoradi.ezshop.result.ReultActivity;
 import com.example.shayanmoradi.ezshop.search.SearchActivity;
 import com.example.shayanmoradi.ezshop.setting.SettingActivity;
 import com.google.android.material.chip.Chip;
@@ -322,6 +324,21 @@ public class HomeFragment extends Fragment implements NavigationView.OnNavigatio
         }
         if (id == R.id.nav_setting){
             Intent intent =SettingActivity.newIntent(getContext());
+            startActivity(intent);
+        }
+        if(id==R.id.nav_about_us){
+            Toast.makeText(getContext(), "Developed By Shayan Moradi  ", Toast.LENGTH_SHORT).show();
+        }
+        if(id==R.id.nav_news){
+            Intent intent= ReultActivity.newIntent(getActivity(),true,0,"","rating");
+            startActivity(intent);
+        }
+        if(id==R.id.nav_news){
+            Intent intent= ReultActivity.newIntent(getActivity(),true,0,"","popularity");
+            startActivity(intent);
+        }
+        if(id==R.id.nav_hits){
+            Intent intent= ReultActivity.newIntent(getActivity(),true,0,"","rating");
             startActivity(intent);
         }
 

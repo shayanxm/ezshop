@@ -63,12 +63,13 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:orientation="horizontal"
-        android:layoutDirection="rtl">
+        android:layout_marginTop="36dp"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -218,9 +219,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="استفاده از کوپن" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/coupon_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_weight="1"
+        android:hint="کد کوپن"
+        android:layoutDirection="rtl"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="205dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/coupon_et"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/confrim_order_cons"

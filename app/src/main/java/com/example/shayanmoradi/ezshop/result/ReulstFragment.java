@@ -52,14 +52,17 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
     private String searchString;
     List<Product> currentProducts;
     TextView sortByWhatTv;
+    private String orderBy;
+    private static final String ORDER_BY = "com.example.shayanmoradi.ezshop.itemsofcategory.orderby";
 
 
-    public static ReulstFragment newInstance(boolean trueForCategory, int catergoryId, String searchString) {
+    public static ReulstFragment newInstance(boolean trueForCategory, int catergoryId, String searchString, String orderBy) {
 
         Bundle args = new Bundle();
         args.putBoolean(TRUE_FOR_CATEGORY, trueForCategory);
         args.putInt(CATEGORY_ID, catergoryId);
         args.putString(SEARCHING_STRING, searchString);
+        args.putString(ORDER_BY, orderBy);
         ReulstFragment fragment = new ReulstFragment();
         fragment.setArguments(args);
         return fragment;
@@ -72,12 +75,19 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        trueForCategory = getArguments().getBoolean(TRUE_FOR_CATEGORY);
-        if (trueForCategory) {
-            catergoryId = getArguments().getInt(CATEGORY_ID);
-        } else {
-            searchString = getArguments().getString(SEARCHING_STRING);
+        if (getArguments().getString(ORDER_BY).equals(null)) {
+            trueForCategory = getArguments().getBoolean(TRUE_FOR_CATEGORY);
+            if (trueForCategory) {
+                catergoryId = getArguments().getInt(CATEGORY_ID);
+            } else {
+                searchString = getArguments().getString(SEARCHING_STRING);
 
+            }
+        }
+        if (!getArguments().getString(ORDER_BY).equals(null)) {
+            if (!getArguments().getString(ORDER_BY).equals("")) {
+                orderBy = getArguments().getString(ORDER_BY);
+            }
         }
 
     }
@@ -91,97 +101,123 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
         showSortByDialog = view.findViewById(R.id.show_sort_by_dialog);
         showFilterFragmnet = view.findViewById(R.id.show_filter_fragment);
         inSortRec = view.findViewById(R.id.in_sort_rec);
-        sortByWhatTv=view.findViewById(R.id.sort_by_what_tv);
+        sortByWhatTv = view.findViewById(R.id.sort_by_what_tv);
         inSortRec.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (trueForCategory) {
-            showSortByDialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ReulstFragment datePickerFragment = new ReulstFragment();
+        if (orderBy != "") {
 
-//                datePickerFragment.show(getFragmentManager(), "MyDialog");
-
-
-                    DialogFragment dialogFrag = new SortChoserDialogFragment();
-// This is the requestCode that you are sending.
-                    dialogFrag.setTargetFragment(ReulstFragment.this, SORT_BY_REC_CODE);
-// This is the tag, "dialog" being sent.
-                    dialogFrag.show(getFragmentManager(), "dialog");
-                }
-            });
-            showFilterFragmnet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = FilterActivity.newIntent(getActivity(), catergoryId);
-                    startActivity(intent);
-                }
-            });
-
-            RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                    .sortCategoriesItemsByCategoryItem(catergoryId, "popularity","desc").enqueue(new Callback<List<Product>>() {
+            RetrofitClientInstance.getRetrofitInstance().create(Api.class).getCommitsByName(orderBy).enqueue(new Callback<List<Product>>() {
                 @Override
                 public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                    if (response.isSuccessful()) {
-                        currentProducts = response.body();
-                        inSortAdapter = new CustomerAdapter(currentProducts);
-                        inSortRec.setAdapter(inSortAdapter);
-                    }
+
+                    currentProducts = response.body();
+                    inSortAdapter = new CustomerAdapter(currentProducts);
+                    inSortRec.setAdapter(inSortAdapter);
                 }
 
                 @Override
                 public void onFailure(Call<List<Product>> call, Throwable t) {
 
-                    HandleThings.isOnline(getActivity(), getFragmentManager());
                 }
             });
-        } else {
-            showSortByDialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ReulstFragment datePickerFragment = new ReulstFragment();
-
-//                datePickerFragment.show(getFragmentManager(), "MyDialog");
-
-
-                    DialogFragment dialogFrag = new SortChoserDialogFragment();
-// This is the requestCode that you are sending.
-                    dialogFrag.setTargetFragment(ReulstFragment.this,SORT_BY_REC_SEARCHED_CODE );
-// This is the tag, "dialog" being sent.
-                    dialogFrag.show(getFragmentManager(), "dialog");
-                }
-            });
-            showFilterFragmnet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = FilterActivity.newIntent(getActivity(), catergoryId);
-                    startActivity(intent);
-                }
-            });
-
-            RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                    .searchWithName(searchString).enqueue(new Callback<List<Product>>() {
-                @Override
-                public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                    if (response.isSuccessful()) {
-                        currentProducts = response.body();
-                        inSortAdapter = new CustomerAdapter(currentProducts);
-                        inSortRec.setAdapter(inSortAdapter);
-
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Product>> call, Throwable t) {
-
-                    HandleThings.isOnline(getActivity(), getFragmentManager());
-                }
-            });
-
 
         }
 
+
+
+
+
+
+
+else {
+            if (trueForCategory) {
+                showSortByDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReulstFragment datePickerFragment = new ReulstFragment();
+
+//                datePickerFragment.show(getFragmentManager(), "MyDialog");
+
+
+                        DialogFragment dialogFrag = new SortChoserDialogFragment();
+// This is the requestCode that you are sending.
+                        dialogFrag.setTargetFragment(ReulstFragment.this, SORT_BY_REC_CODE);
+// This is the tag, "dialog" being sent.
+                        dialogFrag.show(getFragmentManager(), "dialog");
+                    }
+                });
+                showFilterFragmnet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = FilterActivity.newIntent(getActivity(), catergoryId);
+                        startActivity(intent);
+                    }
+                });
+
+                RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                        .sortCategoriesItemsByCategoryItem(catergoryId, "popularity", "desc").enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        if (response.isSuccessful()) {
+                            currentProducts = response.body();
+                            inSortAdapter = new CustomerAdapter(currentProducts);
+                            inSortRec.setAdapter(inSortAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                        HandleThings.isOnline(getActivity(), getFragmentManager());
+                    }
+                });
+            } else {
+                showSortByDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReulstFragment datePickerFragment = new ReulstFragment();
+
+//                datePickerFragment.show(getFragmentManager(), "MyDialog");
+
+
+                        DialogFragment dialogFrag = new SortChoserDialogFragment();
+// This is the requestCode that you are sending.
+                        dialogFrag.setTargetFragment(ReulstFragment.this, SORT_BY_REC_SEARCHED_CODE);
+// This is the tag, "dialog" being sent.
+                        dialogFrag.show(getFragmentManager(), "dialog");
+                    }
+                });
+                showFilterFragmnet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = FilterActivity.newIntent(getActivity(), catergoryId);
+                        startActivity(intent);
+                    }
+                });
+
+                RetrofitClientInstance.getRetrofitInstance().create(Api.class)
+                        .searchWithName(searchString).enqueue(new Callback<List<Product>>() {
+                    @Override
+                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                        if (response.isSuccessful()) {
+                            currentProducts = response.body();
+                            inSortAdapter = new CustomerAdapter(currentProducts);
+                            inSortRec.setAdapter(inSortAdapter);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Product>> call, Throwable t) {
+
+                        HandleThings.isOnline(getActivity(), getFragmentManager());
+                    }
+                });
+
+
+            }
+        }
         return view;
     }
 
@@ -272,30 +308,30 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
             int res = (int) data.getSerializableExtra(POSITOIN);
             String sortBy = "";
             String orderBy = "";
-            String farsiSort="";
+            String farsiSort = "";
 
             switch (res) {
                 case 1:
                     sortBy = "popularity";
 
                     orderBy = "desc";
-                    farsiSort="پر فروش ترین";
+                    farsiSort = "پر فروش ترین";
                     break;
 
                 case 2:
                     sortBy = "price";
                     orderBy = "asc";
-                    farsiSort="قیمت کم به زیاد";
+                    farsiSort = "قیمت کم به زیاد";
                     break;
                 case 3:
                     sortBy = "price";
                     orderBy = "desc";
-                    farsiSort="قیمت زیاد به کم";
+                    farsiSort = "قیمت زیاد به کم";
                     break;
                 case 4:
                     sortBy = "date";
                     orderBy = "desc";
-                    farsiSort="جدید ترین";
+                    farsiSort = "جدید ترین";
 
                     break;
 
@@ -304,7 +340,7 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
 
 
             RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                    .sortCategoriesItemsByCategoryItem(catergoryId, sortBy,orderBy).enqueue(new Callback<List<Product>>() {
+                    .sortCategoriesItemsByCategoryItem(catergoryId, sortBy, orderBy).enqueue(new Callback<List<Product>>() {
                 @Override
                 public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                     if (response.isSuccessful()) {
@@ -323,40 +359,40 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
             });
 
         }
-        if (requestCode==SORT_BY_REC_SEARCHED_CODE){
+        if (requestCode == SORT_BY_REC_SEARCHED_CODE) {
             int res = (int) data.getSerializableExtra(POSITOIN);
-            String farsiSort="";
+            String farsiSort = "";
             String sortBy = "";
             String orderBy = "";
 
             switch (res) {
                 case 1:
                     sortBy = "popularity";
-                    farsiSort="پر فروش ترین";
+                    farsiSort = "پر فروش ترین";
                     orderBy = "desc";
                     break;
 
                 case 2:
                     sortBy = "price";
                     orderBy = "asc";
-                    farsiSort="قیمت کم به زیاد";
+                    farsiSort = "قیمت کم به زیاد";
 
                     break;
                 case 3:
                     sortBy = "price";
                     orderBy = "desc";
-                    farsiSort="قیمت زیاد به کم";
+                    farsiSort = "قیمت زیاد به کم";
                     break;
                 case 4:
                     sortBy = "date";
                     orderBy = "desc";
-                    farsiSort="جدید ترین";
+                    farsiSort = "جدید ترین";
                     break;
 
             }
             sortByWhatTv.setText(farsiSort);
             RetrofitClientInstance.getRetrofitInstance().create(Api.class)
-                    .sortCategoriesItemsByCategoryItemSearched( sortBy,orderBy,searchString).enqueue(new Callback<List<Product>>() {
+                    .sortCategoriesItemsByCategoryItemSearched(sortBy, orderBy, searchString).enqueue(new Callback<List<Product>>() {
                 @Override
                 public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                     if (response.isSuccessful()) {
@@ -376,6 +412,6 @@ public class ReulstFragment extends androidx.fragment.app.Fragment {
 
         }
 
-        }
     }
+}
 
